@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="256" height="256" viewBox="0 0 256 256" xmlns="http://www.w3.org/2000/svg">
+  <!-- Background -->
+  <rect width="256" height="256" fill="#2271b1" rx="32"/>
+  
+  <!-- Megaphone Icon -->
+  <g transform="translate(128, 128)">
+    <!-- Main megaphone body -->
+    <path d="M -50,-30 L 40,-50 L 40,50 L -50,30 Z" fill="#ffffff" stroke="#1a5a8a" stroke-width="3"/>
+    
+    <!-- Handle -->
+    <path d="M -50,-30 L -50,30 L -70,40 L -70,-40 Z" fill="#e8f4f8" stroke="#1a5a8a" stroke-width="2"/>
+    
+    <!-- Sound waves -->
+    <path d="M 50,-40 Q 70,-40 70,-30" fill="none" stroke="#ffd93d" stroke-width="4" stroke-linecap="round"/>
+    <path d="M 50,-20 Q 75,-20 75,-5" fill="none" stroke="#ffd93d" stroke-width="4" stroke-linecap="round"/>
+    <path d="M 50,0 Q 80,0 80,20" fill="none" stroke="#ffd93d" stroke-width="4" stroke-linecap="round"/>
+    <path d="M 50,20 Q 75,20 75,35" fill="none" stroke="#ffd93d" stroke-width="4" stroke-linecap="round"/>
+    <path d="M 50,40 Q 70,40 70,50" fill="none" stroke="#ffd93d" stroke-width="4" stroke-linecap="round"/>
+    
+    <!-- Opening circle -->
+    <circle cx="40" cy="0" r="8" fill="#1a5a8a"/>
+  </g>
+  
+  <!-- DM text badge -->
+  <rect x="15" y="190" width="50" height="50" fill="#ffd93d" rx="8"/>
+  <text x="40" y="223" font-family="Arial, sans-serif" font-size="24" font-weight="bold" fill="#1a5a8a" text-anchor="middle">DM</text>
+</svg>

@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="772" height="250" viewBox="0 0 772 250" xmlns="http://www.w3.org/2000/svg">
+  <!-- Background gradient -->
+  <defs>
+    <linearGradient id="bgGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#2271b1;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#1a5a8a;stop-opacity:1" />
+    </linearGradient>
+    <linearGradient id="accentGradient" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" style="stop-color:#ffd93d;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#ffed4e;stop-opacity:1" />
+    </linearGradient>
+  </defs>
+  
+  <rect width="772" height="250" fill="url(#bgGradient)"/>
+  
+  <!-- Decorative elements -->
+  <circle cx="680" cy="50" r="80" fill="#1a5a8a" opacity="0.3"/>
+  <circle cx="720" cy="200" r="60" fill="#135279" opacity="0.3"/>
+  
+  <!-- Icon -->
+  <g transform="translate(80, 125)">
+    <!-- Megaphone -->
+    <path d="M -30,-20 L 25,-30 L 25,30 L -30,20 Z" fill="#ffffff" stroke="#ffd93d" stroke-width="2"/>
+    <path d="M -30,-20 L -30,20 L -40,25 L -40,-25 Z" fill="#e8f4f8" stroke="#ffd93d" stroke-width="1.5"/>
+    
+    <!-- Sound waves -->
+    <path d="M 30,-25 Q 45,-25 45,-15" fill="none" stroke="#ffd93d" stroke-width="3" stroke-linecap="round"/>
+    <path d="M 30,-10 Q 50,-10 50,0" fill="none" stroke="#ffd93d" stroke-width="3" stroke-linecap="round"/>
+    <path d="M 30,10 Q 50,10 50,20" fill="none" stroke="#ffd93d" stroke-width="3" stroke-linecap="round"/>
+    <path d="M 30,25 Q 45,25 45,35" fill="none" stroke="#ffd93d" stroke-width="3" stroke-linecap="round"/>
+    
+    <circle cx="25" cy="0" r="5" fill="#ffd93d"/>
+  </g>
+  
+  <!-- Main Title -->
+  <text x="160" y="110" font-family="Arial, sans-serif" font-size="48" font-weight="bold" fill="#ffffff">
+    DesignMaster Ads
+  </text>
+  
+  <!-- Tagline -->
+  <text x="160" y="150" font-family="Arial, sans-serif" font-size="20" fill="#e8f4f8">
+    Complete Banner Management with Advanced Analytics
+  </text>
+  
+  <!-- Features badges -->
+  <g transform="translate(160, 175)">
+    <!-- Badge 1 -->
+    <rect x="0" y="0" width="120" height="35" fill="url(#accentGradient)" rx="17.5"/>
+    <text x="60" y="23" font-family="Arial, sans-serif" font-size="14" font-weight="bold" fill="#1a5a8a" text-anchor="middle">
+      📊 Analytics
+    </text>
+    
+    <!-- Badge 2 -->
+    <rect x="130" y="0" width="120" height="35" fill="#ffffff" rx="17.5" opacity="0.9"/>
+    <text x="190" y="23" font-family="Arial, sans-serif" font-size="14" font-weight="bold" fill="#2271b1" text-anchor="middle">
+      🔄 Rotation
+    </text>
+    
+    <!-- Badge 3 -->
+    <rect x="260" y="0" width="130" height="35" fill="#ffffff" rx="17.5" opacity="0.9"/>
+    <text x="325" y="23" font-family="Arial, sans-serif" font-size="14" font-weight="bold" fill="#2271b1" text-anchor="middle">
+      📈 Statistics
+    </text>
+  </g>
+  
+  <!-- Decorative chart lines -->
+  <g transform="translate(620, 180)" opacity="0.4">
+    <rect x="0" y="-40" width="8" height="40" fill="#ffd93d" rx="4"/>
+    <rect x="15" y="-60" width="8" height="60" fill="#ffd93d" rx="4"/>
+    <rect x="30" y="-50" width="8" height="50" fill="#ffd93d" rx="4"/>
+    <rect x="45" y="-70" width="8" height="70" fill="#ffd93d" rx="4"/>
+    <rect x="60" y="-45" width="8" height="45" fill="#ffd93d" rx="4"/>
+  </g>
+</svg>

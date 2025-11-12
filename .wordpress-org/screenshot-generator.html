@@ -1,0 +1,313 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DesignMaster Ads - Screenshot Generator</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen-Sans, Ubuntu, Cantarell, "Helvetica Neue", sans-serif;
+            background: #f0f0f1;
+            padding: 20px;
+        }
+        
+        .screenshot {
+            width: 1280px;
+            margin: 0 auto 40px;
+            background: #fff;
+            border-radius: 8px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+            overflow: hidden;
+        }
+        
+        .wp-header {
+            background: #1d2327;
+            height: 32px;
+            display: flex;
+            align-items: center;
+            padding: 0 20px;
+            gap: 10px;
+        }
+        
+        .wp-menu {
+            width: 160px;
+            background: #1d2327;
+            color: #fff;
+            padding: 10px;
+        }
+        
+        .wp-menu-item {
+            padding: 8px 12px;
+            margin: 4px 0;
+            border-radius: 4px;
+            background: #2271b1;
+        }
+        
+        .content {
+            padding: 40px;
+        }
+        
+        .header {
+            background: #fff;
+            padding: 20px;
+            margin-bottom: 20px;
+            border-left: 4px solid #2271b1;
+            box-shadow: 0 1px 1px rgba(0,0,0,0.04);
+        }
+        
+        .header h1 {
+            font-size: 24px;
+            margin-bottom: 10px;
+            color: #1d2327;
+        }
+        
+        .header p {
+            color: #646970;
+        }
+        
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 20px;
+            margin: 20px 0;
+        }
+        
+        .stat-card {
+            background: #fff;
+            padding: 20px;
+            border-radius: 4px;
+            box-shadow: 0 1px 1px rgba(0,0,0,0.04);
+            border-top: 3px solid #2271b1;
+        }
+        
+        .stat-card.success { border-top-color: #00a32a; }
+        .stat-card.warning { border-top-color: #dba617; }
+        .stat-card.info { border-top-color: #72aee6; }
+        
+        .stat-card h3 {
+            font-size: 12px;
+            text-transform: uppercase;
+            color: #646970;
+            margin-bottom: 10px;
+        }
+        
+        .stat-value {
+            font-size: 32px;
+            font-weight: bold;
+            color: #1d2327;
+        }
+        
+        .stat-label {
+            font-size: 12px;
+            color: #646970;
+            margin-top: 5px;
+        }
+        
+        .chart-container {
+            background: #fff;
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 4px;
+            box-shadow: 0 1px 1px rgba(0,0,0,0.04);
+        }
+        
+        .chart-placeholder {
+            height: 300px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #fff;
+            font-size: 24px;
+        }
+        
+        table {
+            width: 100%;
+            background: #fff;
+            border-collapse: collapse;
+        }
+        
+        th, td {
+            padding: 12px;
+            text-align: left;
+            border-bottom: 1px solid #dcdcde;
+        }
+        
+        th {
+            background: #f6f7f7;
+            font-weight: 600;
+        }
+        
+        .badge {
+            display: inline-block;
+            padding: 4px 12px;
+            border-radius: 12px;
+            font-size: 12px;
+            font-weight: 600;
+        }
+        
+        .badge-success { background: #d5f4e6; color: #046c4e; }
+        .badge-info { background: #e0f2fe; color: #075985; }
+        .badge-warning { background: #fef3c7; color: #92400e; }
+    </style>
+</head>
+<body>
+
+<!-- Screenshot 1: Dashboard -->
+<div class="screenshot" id="screenshot-1">
+    <div class="wp-header"></div>
+    <div class="content">
+        <div class="header">
+            <h1>Painel DesignMaster Ads</h1>
+            <p>Visão geral do desempenho e estatísticas dos seus banners</p>
+        </div>
+        
+        <div class="stats-grid">
+            <div class="stat-card">
+                <h3>Total de Visualizações (30 dias)</h3>
+                <div class="stat-value">124,567</div>
+                <div class="stat-label">Impressões de banners</div>
+            </div>
+            <div class="stat-card success">
+                <h3>Total de Cliques (30 dias)</h3>
+                <div class="stat-value">4,893</div>
+                <div class="stat-label">Interações de usuários</div>
+            </div>
+            <div class="stat-card warning">
+                <h3>CTR Médio</h3>
+                <div class="stat-value">3.92%</div>
+                <div class="stat-label">Taxa de cliques</div>
+            </div>
+            <div class="stat-card info">
+                <h3>Banners Ativos</h3>
+                <div class="stat-value">12</div>
+                <div class="stat-label">Atualmente publicados</div>
+            </div>
+        </div>
+        
+        <div class="chart-container">
+            <h2>Top 5 Banners com Melhor Desempenho (Últimos 30 Dias)</h2>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Banner</th>
+                        <th>Visualizações</th>
+                        <th>Cliques</th>
+                        <th>CTR</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><strong>Banner Promoção Black Friday</strong></td>
+                        <td>45,234</td>
+                        <td>2,156</td>
+                        <td><span class="badge badge-success">4.76%</span></td>
+                    </tr>
+                    <tr>
+                        <td><strong>Banner Header Principal</strong></td>
+                        <td>38,921</td>
+                        <td>1,432</td>
+                        <td><span class="badge badge-success">3.68%</span></td>
+                    </tr>
+                    <tr>
+                        <td><strong>Sidebar Produto Destaque</strong></td>
+                        <td>28,567</td>
+                        <td>892</td>
+                        <td><span class="badge badge-info">3.12%</span></td>
+                    </tr>
+                    <tr>
+                        <td><strong>Footer Newsletter</strong></td>
+                        <td>11,845</td>
+                        <td>413</td>
+                        <td><span class="badge badge-warning">2.89%</span></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+<!-- Screenshot 2: Analytics -->
+<div class="screenshot" id="screenshot-2">
+    <div class="wp-header"></div>
+    <div class="content">
+        <div class="header">
+            <h1>Análise & Estatísticas</h1>
+            <p>Métricas de desempenho detalhadas e insights</p>
+        </div>
+        
+        <div style="background: #fff; padding: 15px 20px; margin: 20px 0; border-radius: 4px; display: flex; gap: 15px;">
+            <div style="display: flex; gap: 10px; align-items: center;">
+                <label style="font-weight: 600;">Período:</label>
+                <select style="padding: 6px 10px; border: 1px solid #8c8f94; border-radius: 4px;">
+                    <option>Últimos 7 Dias</option>
+                    <option>Últimos 30 Dias</option>
+                    <option selected>Período Personalizado</option>
+                </select>
+            </div>
+            <div style="display: flex; gap: 10px; padding: 10px 15px; background: #f6f7f7; border-radius: 4px;">
+                <div>
+                    <label style="font-size: 12px; font-weight: 600;">Data Inicial:</label>
+                    <input type="date" value="2025-01-01" style="padding: 6px 10px; border: 1px solid #8c8f94; border-radius: 4px; display: block; margin-top: 5px;">
+                </div>
+                <div>
+                    <label style="font-size: 12px; font-weight: 600;">Data Final:</label>
+                    <input type="date" value="2025-01-31" style="padding: 6px 10px; border: 1px solid #8c8f94; border-radius: 4px; display: block; margin-top: 5px;">
+                </div>
+            </div>
+        </div>
+        
+        <div class="chart-container">
+            <h2>Visualizações & Cliques - Tendência</h2>
+            <div class="chart-placeholder">📈 Gráfico de Linha Interativo com Chart.js</div>
+        </div>
+        
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px;">
+            <div class="chart-container">
+                <h2>Distribuição por Dispositivo</h2>
+                <div class="chart-placeholder" style="height: 250px;">📊 Gráfico de Pizza</div>
+            </div>
+            <div class="chart-container">
+                <h2>Performance por Hora</h2>
+                <div class="chart-placeholder" style="height: 250px;">📊 Gráfico de Barras</div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Instructions -->
+<div style="max-width: 1280px; margin: 40px auto; padding: 20px; background: #fff; border-radius: 8px;">
+    <h2 style="margin-bottom: 20px;">📸 Como Capturar os Screenshots</h2>
+    <ol style="line-height: 2;">
+        <li>Abra este arquivo no navegador (Chrome recomendado)</li>
+        <li>Para cada screenshot, use F12 > Device Toolbar e defina: <strong>1280 x 720px</strong></li>
+        <li>Capture cada div <code>.screenshot</code> individualmente</li>
+        <li>Ou use uma extensão como "Full Page Screen Capture"</li>
+        <li>Salve as imagens como <code>screenshot-1.png</code>, <code>screenshot-2.png</code>, etc.</li>
+        <li>Coloque os arquivos na pasta <code>.wordpress-org/</code></li>
+    </ol>
+    
+    <h3 style="margin-top: 30px; margin-bottom: 15px;">Screenshots Necessários:</h3>
+    <ul style="line-height: 2;">
+        <li>✅ <strong>Screenshot 1:</strong> Dashboard com KPIs e Top Banners</li>
+        <li>✅ <strong>Screenshot 2:</strong> Analytics com período personalizado e gráficos</li>
+        <li>⚠️ <strong>Screenshot 3:</strong> Capture do WordPress real - Zone Manager</li>
+        <li>⚠️ <strong>Screenshot 4:</strong> Capture do WordPress real - Banner Edit</li>
+        <li>⚠️ <strong>Screenshot 5:</strong> Capture do WordPress real - Banner Listing</li>
+        <li>⚠️ <strong>Screenshot 6:</strong> Capture do site - Banner no Frontend</li>
+    </ul>
+    
+    <p style="margin-top: 20px; padding: 15px; background: #fef3c7; border-left: 4px solid #92400e; border-radius: 4px;">
+        <strong>💡 Dica:</strong> Os screenshots 3-6 devem ser capturados diretamente do WordPress instalado para mostrar a interface real do plugin.
+    </p>
+</div>
+
+</body>
+</html>

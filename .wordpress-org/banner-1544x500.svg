@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="1544" height="500" viewBox="0 0 1544 500" xmlns="http://www.w3.org/2000/svg">
+  <!-- Background gradient -->
+  <defs>
+    <linearGradient id="bgGradient2x" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#2271b1;stop-opacity:1" />
+      <stop offset="50%" style="stop-color:#1a5a8a;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#135279;stop-opacity:1" />
+    </linearGradient>
+    <linearGradient id="accentGradient2x" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" style="stop-color:#ffd93d;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#ffed4e;stop-opacity:1" />
+    </linearGradient>
+  </defs>
+  
+  <rect width="1544" height="500" fill="url(#bgGradient2x)"/>
+  
+  <!-- Decorative circles -->
+  <circle cx="1380" cy="100" r="160" fill="#1a5a8a" opacity="0.3"/>
+  <circle cx="1450" cy="400" r="120" fill="#135279" opacity="0.3"/>
+  <circle cx="100" cy="400" r="100" fill="#1a5a8a" opacity="0.2"/>
+  
+  <!-- Large Icon -->
+  <g transform="translate(180, 250)">
+    <!-- Megaphone -->
+    <path d="M -60,-40 L 50,-60 L 50,60 L -60,40 Z" fill="#ffffff" stroke="#ffd93d" stroke-width="4"/>
+    <path d="M -60,-40 L -60,40 L -80,50 L -80,-50 Z" fill="#e8f4f8" stroke="#ffd93d" stroke-width="3"/>
+    
+    <!-- Sound waves -->
+    <path d="M 60,-50 Q 90,-50 90,-30" fill="none" stroke="#ffd93d" stroke-width="6" stroke-linecap="round"/>
+    <path d="M 60,-20 Q 100,-20 100,0" fill="none" stroke="#ffd93d" stroke-width="6" stroke-linecap="round"/>
+    <path d="M 60,20 Q 100,20 100,40" fill="none" stroke="#ffd93d" stroke-width="6" stroke-linecap="round"/>
+    <path d="M 60,50 Q 90,50 90,70" fill="none" stroke="#ffd93d" stroke-width="6" stroke-linecap="round"/>
+    
+    <circle cx="50" cy="0" r="10" fill="#ffd93d"/>
+  </g>
+  
+  <!-- Main Title -->
+  <text x="340" y="200" font-family="Arial, sans-serif" font-size="96" font-weight="bold" fill="#ffffff">
+    DesignMaster Ads
+  </text>
+  
+  <!-- Tagline -->
+  <text x="340" y="270" font-family="Arial, sans-serif" font-size="40" fill="#e8f4f8">
+    Complete Banner Management System
+  </text>
+  
+  <text x="340" y="320" font-family="Arial, sans-serif" font-size="36" fill="#b8ddf0">
+    Advanced Analytics • Smart Rotation • Detailed Statistics
+  </text>
+  
+  <!-- Feature highlights -->
+  <g transform="translate(340, 360)">
+    <g>
+      <circle cx="0" cy="0" r="12" fill="#ffd93d"/>
+      <text x="25" y="8" font-family="Arial, sans-serif" font-size="28" fill="#ffffff">
+        Real-time tracking with AJAX
+      </text>
+    </g>
+    
+    <g transform="translate(0, 50)">
+      <circle cx="0" cy="0" r="12" fill="#ffd93d"/>
+      <text x="25" y="8" font-family="Arial, sans-serif" font-size="28" fill="#ffffff">
+        3 rotation types: Fixed, Reload, Timed
+      </text>
+    </g>
+    
+    <g transform="translate(500, 0)">
+      <circle cx="0" cy="0" r="12" fill="#ffd93d"/>
+      <text x="25" y="8" font-family="Arial, sans-serif" font-size="28" fill="#ffffff">
+        LGPD/GDPR compliant
+      </text>
+    </g>
+    
+    <g transform="translate(500, 50)">
+      <circle cx="0" cy="0" r="12" fill="#ffd93d"/>
+      <text x="25" y="8" font-family="Arial, sans-serif" font-size="28" fill="#ffffff">
+        Device detection & analytics
+      </text>
+    </g>
+  </g>
+  
+  <!-- Decorative chart visualization -->
+  <g transform="translate(1200, 380)" opacity="0.5">
+    <rect x="0" y="-80" width="16" height="80" fill="#ffd93d" rx="8"/>
+    <rect x="30" y="-120" width="16" height="120" fill="#ffd93d" rx="8"/>
+    <rect x="60" y="-100" width="16" height="100" fill="#ffd93d" rx="8"/>
+    <rect x="90" y="-140" width="16" height="140" fill="#ffd93d" rx="8"/>
+    <rect x="120" y="-90" width="16" height="90" fill="#ffd93d" rx="8"/>
+    <rect x="150" y="-110" width="16" height="110" fill="#ffd93d" rx="8"/>
+  </g>
+</svg>
