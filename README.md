@@ -4,12 +4,16 @@ Sistema completo de gestão de banners para WordPress com analytics avançado, r
 
 ## 🚀 Funcionalidades
 
-### Gestão de Banners
-- ✅ Upload de assets (imagens, HTML5, vídeos)
-- ✅ Agendamento por data/hora (início e fim)
-- ✅ Links de destino com tracking
-- ✅ Status ativo/inativo
-- ✅ Prioridade e peso para rotação
+### Recursos Principais
+
+- **Gestão de Banners**
+  - Custom Post Type dedicado
+  - Upload de imagem com WordPress Media Library
+  - Campo de imagem customizado com preview
+  - URL de destino configurável
+  - Sistema de agendamento (data/hora início e fim)
+  - Status ativo/inativo
+  - Sistema de prioridade (peso 1-100)
 
 ### Áreas de Banner (Zones)
 - ✅ **Fixo**: Exibe sempre o mesmo banner
