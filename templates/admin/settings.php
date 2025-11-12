@@ -11,44 +11,44 @@ settings_errors('dm_ads_settings');
 
 <div class="wrap">
     <div class="dm-ads-admin-header">
-        <h1><?php _e('DesignMaster Ads Settings', 'designmaster-ads'); ?></h1>
-        <p><?php _e('Configure plugin behavior and tracking options', 'designmaster-ads'); ?></p>
+        <h1><?php esc_html_e('DesignMaster Ads Settings', 'designmaster-ads'); ?></h1>
+        <p><?php esc_html_e('Configure plugin behavior and tracking options', 'designmaster-ads'); ?></p>
     </div>
 
     <div class="dm-ads-chart-container">
         <form method="post" action="">
             <?php wp_nonce_field('dm_ads_settings_action', 'dm_ads_settings_nonce'); ?>
             
-            <h2><?php _e('Tracking Settings', 'designmaster-ads'); ?></h2>
+            <h2><?php esc_html_e('Tracking Settings', 'designmaster-ads'); ?></h2>
             <table class="form-table">
                 <tr>
-                    <th><?php _e('Track Banner Views', 'designmaster-ads'); ?></th>
+                    <th><?php esc_html_e('Track Banner Views', 'designmaster-ads'); ?></th>
                     <td>
                         <label>
                             <input type="checkbox" name="track_views" value="1" <?php checked($settings['track_views'], true); ?>>
-                            <?php _e('Enable view tracking', 'designmaster-ads'); ?>
+                            <?php esc_html_e('Enable view tracking', 'designmaster-ads'); ?>
                         </label>
-                        <p class="description"><?php _e('Track how many times each banner is displayed', 'designmaster-ads'); ?></p>
+                        <p class="description"><?php esc_html_e('Track how many times each banner is displayed', 'designmaster-ads'); ?></p>
                     </td>
                 </tr>
                 <tr>
-                    <th><?php _e('Track Banner Clicks', 'designmaster-ads'); ?></th>
+                    <th><?php esc_html_e('Track Banner Clicks', 'designmaster-ads'); ?></th>
                     <td>
                         <label>
                             <input type="checkbox" name="track_clicks" value="1" <?php checked($settings['track_clicks'], true); ?>>
-                            <?php _e('Enable click tracking', 'designmaster-ads'); ?>
+                            <?php esc_html_e('Enable click tracking', 'designmaster-ads'); ?>
                         </label>
-                        <p class="description"><?php _e('Track when users click on banners', 'designmaster-ads'); ?></p>
+                        <p class="description"><?php esc_html_e('Track when users click on banners', 'designmaster-ads'); ?></p>
                     </td>
                 </tr>
                 <tr>
-                    <th><?php _e('Anonymize IP Addresses', 'designmaster-ads'); ?></th>
+                    <th><?php esc_html_e('Anonymize IP Addresses', 'designmaster-ads'); ?></th>
                     <td>
                         <label>
                             <input type="checkbox" name="anonymize_ip" value="1" <?php checked($settings['anonymize_ip'], true); ?>>
-                            <?php _e('Anonymize user IP addresses', 'designmaster-ads'); ?>
+                            <?php esc_html_e('Anonymize user IP addresses', 'designmaster-ads'); ?>
                         </label>
-                        <p class="description"><?php _e('Recommended for GDPR compliance. Last octet of IP will be removed.', 'designmaster-ads'); ?></p>
+                        <p class="description"><?php esc_html_e('Recommended for GDPR compliance. Last octet of IP will be removed.', 'designmaster-ads'); ?></p>
                     </td>
                 </tr>
             </table>
