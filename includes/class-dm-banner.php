@@ -11,6 +11,11 @@ class DM_Ads_Banner {
         add_action('init', array($this, 'register_post_type'));
         add_action('add_meta_boxes', array($this, 'add_meta_boxes'));
         add_action('save_post_dm_banner', array($this, 'save_meta_boxes'));
+        
+        // Custom columns
+        add_filter('manage_dm_banner_posts_columns', array($this, 'set_custom_columns'));
+        add_action('manage_dm_banner_posts_custom_column', array($this, 'custom_column_content'), 10, 2);
+        add_filter('manage_edit-dm_banner_sortable_columns', array($this, 'sortable_columns'));
     }
     
     /**
@@ -328,5 +333,210 @@ class DM_Ads_Banner {
                 update_post_meta($post_id, '_dm_banner_end_date', sanitize_text_field($_POST['dm_banner_end_date']));
             }
         }
+    }
+    
+    /**
+     * Set custom columns for banner list
+     */
+    public function set_custom_columns($columns) {
+        $new_columns = array();
+        
+        // Checkbox
+        $new_columns['cb'] = $columns['cb'];
+        
+        // Thumbnail
+        $new_columns['thumbnail'] = __('Image', 'designmaster-ads');
+        
+        // Title
+        $new_columns['title'] = $columns['title'];
+        
+        // Zone
+        $new_columns['zone'] = __('Zone', 'designmaster-ads');
+        
+        // URL
+        $new_columns['url'] = __('Target URL', 'designmaster-ads');
+        
+        // Status
+        $new_columns['banner_status'] = __('Status', 'designmaster-ads');
+        
+        // Priority
+        $new_columns['priority'] = __('Priority', 'designmaster-ads');
+        
+        // Schedule
+        $new_columns['schedule'] = __('Schedule', 'designmaster-ads');
+        
+        // Stats
+        $new_columns['views'] = __('Views', 'designmaster-ads');
+        $new_columns['clicks'] = __('Clicks', 'designmaster-ads');
+        $new_columns['ctr'] = __('CTR', 'designmaster-ads');
+        
+        // Date
+        $new_columns['date'] = $columns['date'];
+        
+        return $new_columns;
+    }
+    
+    /**
+     * Populate custom columns content
+     */
+    public function custom_column_content($column, $post_id) {
+        global $wpdb;
+        
+        switch ($column) {
+            case 'thumbnail':
+                $image_id = get_post_meta($post_id, '_dm_banner_image_id', true);
+                if ($image_id) {
+                    $image_url = wp_get_attachment_image_url($image_id, array(80, 80));
+                    if ($image_url) {
+                        echo '<img src="' . esc_url($image_url) . '" style="width:80px;height:auto;border-radius:4px;" />';
+                    } else {
+                        echo '<span style="color:#999;">—</span>';
+                    }
+                } else {
+                    echo '<span style="color:#999;">—</span>';
+                }
+                break;
+                
+            case 'zone':
+                $zone_slug = get_post_meta($post_id, '_dm_banner_zone', true);
+                if ($zone_slug) {
+                    $zones = get_option('dm_ads_zones', array());
+                    $zone_name = '';
+                    foreach ($zones as $zone) {
+                        if ($zone['slug'] === $zone_slug) {
+                            $zone_name = $zone['name'];
+                            break;
+                        }
+                    }
+                    if ($zone_name) {
+                        echo '<strong>' . esc_html($zone_name) . '</strong><br>';
+                        echo '<span style="color:#666;font-size:12px;">(' . esc_html($zone_slug) . ')</span>';
+                    } else {
+                        echo '<span style="color:#999;">' . esc_html($zone_slug) . '</span>';
+                    }
+                } else {
+                    echo '<span style="color:#999;">—</span>';
+                }
+                break;
+                
+            case 'url':
+                $url = get_post_meta($post_id, '_dm_banner_url', true);
+                if ($url) {
+                    echo '<a href="' . esc_url($url) . '" target="_blank" style="word-break:break-all;">' . esc_html(substr($url, 0, 40)) . (strlen($url) > 40 ? '...' : '') . '</a>';
+                } else {
+                    echo '<span style="color:#999;">—</span>';
+                }
+                break;
+                
+            case 'banner_status':
+                $status = get_post_meta($post_id, '_dm_banner_status', true);
+                $start_date = get_post_meta($post_id, '_dm_banner_start_date', true);
+                $end_date = get_post_meta($post_id, '_dm_banner_end_date', true);
+                
+                $is_scheduled = false;
+                $is_expired = false;
+                $current_time = current_time('mysql');
+                
+                if ($start_date && $start_date > $current_time) {
+                    $is_scheduled = true;
+                }
+                
+                if ($end_date && $end_date < $current_time) {
+                    $is_expired = true;
+                }
+                
+                if ($status === 'active' && !$is_expired && !$is_scheduled) {
+                    echo '<span style="color:#46b450;font-weight:600;">● ' . __('Active', 'designmaster-ads') . '</span>';
+                } elseif ($is_scheduled) {
+                    echo '<span style="color:#00a0d2;font-weight:600;">◐ ' . __('Scheduled', 'designmaster-ads') . '</span>';
+                } elseif ($is_expired) {
+                    echo '<span style="color:#dc3232;font-weight:600;">● ' . __('Expired', 'designmaster-ads') . '</span>';
+                } else {
+                    echo '<span style="color:#999;font-weight:600;">○ ' . __('Inactive', 'designmaster-ads') . '</span>';
+                }
+                break;
+                
+            case 'priority':
+                $priority = get_post_meta($post_id, '_dm_banner_priority', true);
+                if ($priority) {
+                    $color = '#999';
+                    if ($priority >= 80) $color = '#dc3232';
+                    elseif ($priority >= 60) $color = '#f56e28';
+                    elseif ($priority >= 40) $color = '#00a0d2';
+                    elseif ($priority >= 20) $color = '#46b450';
+                    
+                    echo '<span style="color:' . $color . ';font-weight:600;font-size:16px;">' . esc_html($priority) . '</span>';
+                } else {
+                    echo '<span style="color:#999;">50</span>';
+                }
+                break;
+                
+            case 'schedule':
+                $start_date = get_post_meta($post_id, '_dm_banner_start_date', true);
+                $end_date = get_post_meta($post_id, '_dm_banner_end_date', true);
+                
+                if ($start_date || $end_date) {
+                    if ($start_date) {
+                        echo '<strong>' . __('Start:', 'designmaster-ads') . '</strong> ' . date_i18n('d/m/Y H:i', strtotime($start_date)) . '<br>';
+                    }
+                    if ($end_date) {
+                        echo '<strong>' . __('End:', 'designmaster-ads') . '</strong> ' . date_i18n('d/m/Y H:i', strtotime($end_date));
+                    }
+                } else {
+                    echo '<span style="color:#999;">∞ ' . __('Always', 'designmaster-ads') . '</span>';
+                }
+                break;
+                
+            case 'views':
+                $table_name = $wpdb->prefix . 'dm_ads_stats';
+                $views = $wpdb->get_var($wpdb->prepare(
+                    "SELECT SUM(views) FROM $table_name WHERE banner_id = %d",
+                    $post_id
+                ));
+                echo '<strong>' . number_format_i18n($views ? $views : 0) . '</strong>';
+                break;
+                
+            case 'clicks':
+                $table_name = $wpdb->prefix . 'dm_ads_stats';
+                $clicks = $wpdb->get_var($wpdb->prepare(
+                    "SELECT SUM(clicks) FROM $table_name WHERE banner_id = %d",
+                    $post_id
+                ));
+                echo '<strong>' . number_format_i18n($clicks ? $clicks : 0) . '</strong>';
+                break;
+                
+            case 'ctr':
+                $table_name = $wpdb->prefix . 'dm_ads_stats';
+                $stats = $wpdb->get_row($wpdb->prepare(
+                    "SELECT SUM(views) as total_views, SUM(clicks) as total_clicks FROM $table_name WHERE banner_id = %d",
+                    $post_id
+                ));
+                
+                if ($stats && $stats->total_views > 0) {
+                    $ctr = ($stats->total_clicks / $stats->total_views) * 100;
+                    $color = '#999';
+                    if ($ctr >= 5) $color = '#46b450';
+                    elseif ($ctr >= 2) $color = '#00a0d2';
+                    elseif ($ctr >= 1) $color = '#f56e28';
+                    
+                    echo '<span style="color:' . $color . ';font-weight:600;">' . number_format_i18n($ctr, 2) . '%</span>';
+                } else {
+                    echo '<span style="color:#999;">0%</span>';
+                }
+                break;
+        }
+    }
+    
+    /**
+     * Make columns sortable
+     */
+    public function sortable_columns($columns) {
+        $columns['priority'] = 'priority';
+        $columns['banner_status'] = 'banner_status';
+        $columns['views'] = 'views';
+        $columns['clicks'] = 'clicks';
+        $columns['ctr'] = 'ctr';
+        
+        return $columns;
     }
 }

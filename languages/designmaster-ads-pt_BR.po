@@ -47,6 +47,28 @@ msgstr "Nenhum banner encontrado na Lixeira"
 msgid "DM Ads"
 msgstr "DM Ads"
 
+# List Columns
+msgid "Image"
+msgstr "Imagem"
+
+msgid "Zone"
+msgstr "Área"
+
+msgid "Scheduled"
+msgstr "Agendado"
+
+msgid "Expired"
+msgstr "Expirado"
+
+msgid "Start:"
+msgstr "Início:"
+
+msgid "End:"
+msgstr "Fim:"
+
+msgid "Always"
+msgstr "Sempre"
+
 # Meta Boxes
 msgid "Banner Settings"
 msgstr "Configurações do Banner"
