@@ -227,18 +227,51 @@
             exportToCSV();
         });
 
+        // Toggle custom date fields
+        $('#dm-ads-date-range').on('change', function() {
+            const $customDates = $('.dm-ads-custom-dates');
+            if ($(this).val() === 'custom') {
+                $customDates.show();
+            } else {
+                $customDates.hide();
+                // If not custom, reload immediately
+                reloadWithFilters();
+            }
+        });
+
         // Refresh charts on date range change
-        $('#dm-ads-date-range, #dm-ads-banner-filter').on('change', function() {
-            // Reload page with new filters
-            const dateRange = $('#dm-ads-date-range').val();
-            const bannerId = $('#dm-ads-banner-filter').val();
+        $('#dm-ads-banner-filter').on('change', function() {
+            reloadWithFilters();
+        });
+
+        // Apply custom date range
+        $('#dm-ads-start-date, #dm-ads-end-date').on('change', function() {
+            const startDate = $('#dm-ads-start-date').val();
+            const endDate = $('#dm-ads-end-date').val();
             
-            let url = window.location.pathname + '?page=dm-ads-analytics';
-            if (dateRange) url += '&range=' + dateRange;
-            if (bannerId) url += '&banner_id=' + bannerId;
-            
-            window.location.href = url;
+            // Only reload if both dates are set
+            if (startDate && endDate) {
+                reloadWithFilters();
+            }
         });
     });
+
+    // Helper function to reload with filters
+    function reloadWithFilters() {
+        const dateRange = $('#dm-ads-date-range').val();
+        const bannerId = $('#dm-ads-banner-filter').val();
+        const startDate = $('#dm-ads-start-date').val();
+        const endDate = $('#dm-ads-end-date').val();
+        
+        let url = window.location.pathname + '?page=dm-ads-analytics';
+        if (dateRange) url += '&range=' + dateRange;
+        if (bannerId) url += '&banner_id=' + bannerId;
+        if (dateRange === 'custom' && startDate && endDate) {
+            url += '&start_date=' + startDate;
+            url += '&end_date=' + endDate;
+        }
+        
+        window.location.href = url;
+    }
 
 })(jQuery);

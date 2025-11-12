@@ -8,13 +8,24 @@ if (!defined('ABSPATH')) exit;
 // Get filter values
 $date_range = isset($_GET['range']) ? sanitize_text_field($_GET['range']) : '7';
 $banner_id = isset($_GET['banner_id']) ? absint($_GET['banner_id']) : null;
+$start_date = isset($_GET['start_date']) ? sanitize_text_field($_GET['start_date']) : '';
+$end_date = isset($_GET['end_date']) ? sanitize_text_field($_GET['end_date']) : '';
+
+// Calculate days based on custom date range or preset
+if ($date_range === 'custom' && $start_date && $end_date) {
+    $start_timestamp = strtotime($start_date);
+    $end_timestamp = strtotime($end_date);
+    $days = ceil(($end_timestamp - $start_timestamp) / (60 * 60 * 24));
+    if ($days < 1) $days = 1;
+} else {
+    $days = intval($date_range);
+}
 
 // Get stats
-$days = intval($date_range);
-$stats_by_date = DM_Ads_Analytics::get_stats_by_date($banner_id, $days);
-$device_stats = DM_Ads_Analytics::get_stats_by_device($banner_id, $days);
-$hourly_stats = DM_Ads_Analytics::get_hourly_stats($banner_id, $days);
-$top_banners = DM_Ads_Analytics::get_top_banners(10, $days);
+$stats_by_date = DM_Ads_Analytics::get_stats_by_date($banner_id, $days, $start_date, $end_date);
+$device_stats = DM_Ads_Analytics::get_stats_by_device($banner_id, $days, $start_date, $end_date);
+$hourly_stats = DM_Ads_Analytics::get_hourly_stats($banner_id, $days, $start_date, $end_date);
+$top_banners = DM_Ads_Analytics::get_top_banners(10, $days, $start_date, $end_date);
 
 // Prepare data for charts
 $chart_labels = array_keys($stats_by_date);
@@ -49,7 +60,19 @@ $top_banner_clicks = array_column($top_banners, 'clicks');
                 <option value="7" <?php selected($date_range, '7'); ?>><?php _e('Last 7 Days', 'designmaster-ads'); ?></option>
                 <option value="30" <?php selected($date_range, '30'); ?>><?php _e('Last 30 Days', 'designmaster-ads'); ?></option>
                 <option value="90" <?php selected($date_range, '90'); ?>><?php _e('Last 90 Days', 'designmaster-ads'); ?></option>
+                <option value="custom" <?php selected($date_range, 'custom'); ?>><?php _e('Custom Period', 'designmaster-ads'); ?></option>
             </select>
+        </div>
+
+        <div class="dm-ads-filter-group dm-ads-custom-dates" style="display: <?php echo $date_range === 'custom' ? 'flex' : 'none'; ?>;">
+            <div>
+                <label for="dm-ads-start-date"><?php _e('Start Date:', 'designmaster-ads'); ?></label>
+                <input type="date" id="dm-ads-start-date" name="start_date" value="<?php echo esc_attr($start_date); ?>">
+            </div>
+            <div>
+                <label for="dm-ads-end-date"><?php _e('End Date:', 'designmaster-ads'); ?></label>
+                <input type="date" id="dm-ads-end-date" name="end_date" value="<?php echo esc_attr($end_date); ?>">
+            </div>
         </div>
 
         <div class="dm-ads-filter-group">

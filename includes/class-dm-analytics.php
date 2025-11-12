@@ -78,11 +78,16 @@ class DM_Ads_Analytics {
     /**
      * Get stats by date range
      */
-    public static function get_stats_by_date($banner_id = null, $days = 7) {
+    public static function get_stats_by_date($banner_id = null, $days = 7, $start_date = null, $end_date = null) {
         global $wpdb;
         $table = $wpdb->prefix . 'dm_ads_stats';
         
-        $where = "created_at >= DATE_SUB(NOW(), INTERVAL $days DAY)";
+        // Use custom date range if provided, otherwise use days
+        if ($start_date && $end_date) {
+            $where = $wpdb->prepare("created_at >= %s AND created_at <= %s", $start_date . ' 00:00:00', $end_date . ' 23:59:59');
+        } else {
+            $where = "created_at >= DATE_SUB(NOW(), INTERVAL $days DAY)";
+        }
         
         if ($banner_id) {
             $where .= $wpdb->prepare(" AND banner_id = %d", $banner_id);
@@ -114,11 +119,16 @@ class DM_Ads_Analytics {
     /**
      * Get stats by device type
      */
-    public static function get_stats_by_device($banner_id = null, $days = 30) {
+    public static function get_stats_by_device($banner_id = null, $days = 30, $start_date = null, $end_date = null) {
         global $wpdb;
         $table = $wpdb->prefix . 'dm_ads_stats';
         
-        $where = "created_at >= DATE_SUB(NOW(), INTERVAL $days DAY)";
+        // Use custom date range if provided, otherwise use days
+        if ($start_date && $end_date) {
+            $where = $wpdb->prepare("created_at >= %s AND created_at <= %s", $start_date . ' 00:00:00', $end_date . ' 23:59:59');
+        } else {
+            $where = "created_at >= DATE_SUB(NOW(), INTERVAL $days DAY)";
+        }
         
         if ($banner_id) {
             $where .= $wpdb->prepare(" AND banner_id = %d", $banner_id);
@@ -150,9 +160,16 @@ class DM_Ads_Analytics {
     /**
      * Get top performing banners
      */
-    public static function get_top_banners($limit = 10, $days = 30) {
+    public static function get_top_banners($limit = 10, $days = 30, $start_date = null, $end_date = null) {
         global $wpdb;
         $table = $wpdb->prefix . 'dm_ads_stats';
+        
+        // Use custom date range if provided, otherwise use days
+        if ($start_date && $end_date) {
+            $where = $wpdb->prepare("created_at >= %s AND created_at <= %s", $start_date . ' 00:00:00', $end_date . ' 23:59:59');
+        } else {
+            $where = $wpdb->prepare("created_at >= DATE_SUB(NOW(), INTERVAL %d DAY)", $days);
+        }
         
         $results = $wpdb->get_results($wpdb->prepare("
             SELECT 
@@ -160,11 +177,11 @@ class DM_Ads_Analytics {
                 SUM(CASE WHEN event_type = 'view' THEN 1 ELSE 0 END) as views,
                 SUM(CASE WHEN event_type = 'click' THEN 1 ELSE 0 END) as clicks
             FROM $table
-            WHERE created_at >= DATE_SUB(NOW(), INTERVAL %d DAY)
+            WHERE $where
             GROUP BY banner_id
             ORDER BY clicks DESC
             LIMIT %d
-        ", $days, $limit));
+        ", $limit));
         
         $banners = array();
         foreach ($results as $row) {
@@ -187,11 +204,16 @@ class DM_Ads_Analytics {
     /**
      * Get hourly stats for heatmap
      */
-    public static function get_hourly_stats($banner_id = null, $days = 7) {
+    public static function get_hourly_stats($banner_id = null, $days = 7, $start_date = null, $end_date = null) {
         global $wpdb;
         $table = $wpdb->prefix . 'dm_ads_stats';
         
-        $where = "created_at >= DATE_SUB(NOW(), INTERVAL $days DAY)";
+        // Use custom date range if provided, otherwise use days
+        if ($start_date && $end_date) {
+            $where = $wpdb->prepare("created_at >= %s AND created_at <= %s", $start_date . ' 00:00:00', $end_date . ' 23:59:59');
+        } else {
+            $where = "created_at >= DATE_SUB(NOW(), INTERVAL $days DAY)";
+        }
         
         if ($banner_id) {
             $where .= $wpdb->prepare(" AND banner_id = %d", $banner_id);

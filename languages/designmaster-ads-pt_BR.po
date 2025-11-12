@@ -229,6 +229,15 @@ msgstr "Últimos 30 Dias"
 msgid "Last 90 Days"
 msgstr "Últimos 90 Dias"
 
+msgid "Custom Period"
+msgstr "Período Personalizado"
+
+msgid "Start Date:"
+msgstr "Data Inicial:"
+
+msgid "End Date:"
+msgstr "Data Final:"
+
 msgid "Banner:"
 msgstr "Banner:"
 

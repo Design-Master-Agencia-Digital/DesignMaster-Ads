@@ -110,6 +110,35 @@
     margin: 0;
 }
 
+/* Custom date range fields */
+.dm-ads-custom-dates {
+    display: flex;
+    gap: 15px;
+    padding: 10px 15px;
+    background: #f6f7f7;
+    border-radius: 4px;
+    border: 1px solid #dcdcde;
+}
+
+.dm-ads-custom-dates > div {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+}
+
+.dm-ads-custom-dates label {
+    font-size: 12px;
+    font-weight: 600;
+    color: #1d2327;
+}
+
+.dm-ads-custom-dates input[type="date"] {
+    padding: 6px 10px;
+    border: 1px solid #8c8f94;
+    border-radius: 4px;
+    font-size: 13px;
+}
+
 /* Zones Manager */
 .dm-ads-zones-list {
     background: #fff;
