@@ -154,5 +154,5 @@ class DM_Ads_Display {
  */
 function dm_ads_display($zone_slug) {
     $display = new DM_Ads_Display('designmaster-ads', DM_ADS_VERSION);
-    echo $display->display_zone($zone_slug);
+    echo wp_kses_post($display->display_zone($zone_slug));
 }

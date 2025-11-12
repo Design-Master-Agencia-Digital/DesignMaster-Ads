@@ -110,7 +110,7 @@ class DM_Ads_Banner {
                 <?php else: ?>
                     <div style="border: 2px dashed #ddd; padding: 40px; text-align: center; background: #f9f9f9; color: #666;">
                         <span class="dashicons dashicons-format-image" style="font-size: 48px; width: 48px; height: 48px;"></span>
-                        <p><?php _e('No image selected', 'designmaster-ads'); ?></p>
+                        <p><?php esc_html_e('No image selected', 'designmaster-ads'); ?></p>
                     </div>
                 <?php endif; ?>
             </div>
@@ -120,19 +120,19 @@ class DM_Ads_Banner {
             <p>
                 <button type="button" class="button button-primary dm-upload-image-button">
                     <span class="dashicons dashicons-upload" style="margin-top: 3px;"></span>
-                    <?php _e('Upload Image', 'designmaster-ads'); ?>
+                    <?php esc_html_e('Upload Image', 'designmaster-ads'); ?>
                 </button>
                 
                 <?php if ($image_url): ?>
                     <button type="button" class="button dm-remove-image-button">
                         <span class="dashicons dashicons-no" style="margin-top: 3px;"></span>
-                        <?php _e('Remove Image', 'designmaster-ads'); ?>
+                        <?php esc_html_e('Remove Image', 'designmaster-ads'); ?>
                     </button>
                 <?php endif; ?>
             </p>
             
             <p class="description">
-                <?php _e('Click to upload or select an image for this banner', 'designmaster-ads'); ?>
+                <?php esc_html_e('Click to upload or select an image for this banner', 'designmaster-ads'); ?>
             </p>
         </div>
         
@@ -149,9 +149,9 @@ class DM_Ads_Banner {
                 }
                 
                 mediaUploader = wp.media({
-                    title: '<?php _e('Select Banner Image', 'designmaster-ads'); ?>',
+                    title: '<?php esc_attr_e('Select Banner Image', 'designmaster-ads'); ?>',
                     button: {
-                        text: '<?php _e('Use this image', 'designmaster-ads'); ?>'
+                        text: '<?php esc_attr_e('Use this image', 'designmaster-ads'); ?>'
                     },
                     multiple: false
                 });
@@ -162,7 +162,7 @@ class DM_Ads_Banner {
                     $('.dm-banner-image-preview').html('<img src="' + attachment.url + '" style="max-width: 100%; height: auto; border: 1px solid #ddd; padding: 5px; background: #f9f9f9;">');
                     
                     if ($('.dm-remove-image-button').length === 0) {
-                        $('.dm-upload-image-button').after('<button type="button" class="button dm-remove-image-button"><span class="dashicons dashicons-no" style="margin-top: 3px;"></span> <?php _e('Remove Image', 'designmaster-ads'); ?></button>');
+                        $('.dm-upload-image-button').after('<button type="button" class="button dm-remove-image-button"><span class="dashicons dashicons-no" style="margin-top: 3px;"></span> <?php esc_html_e('Remove Image', 'designmaster-ads'); ?></button>');
                     }
                 });
                 
@@ -172,7 +172,7 @@ class DM_Ads_Banner {
             $(document).on('click', '.dm-remove-image-button', function(e) {
                 e.preventDefault();
                 $('#dm_banner_image_id').val('');
-                $('.dm-banner-image-preview').html('<div style="border: 2px dashed #ddd; padding: 40px; text-align: center; background: #f9f9f9; color: #666;"><span class="dashicons dashicons-format-image" style="font-size: 48px; width: 48px; height: 48px;"></span><p><?php _e('No image selected', 'designmaster-ads'); ?></p></div>');
+                $('.dm-banner-image-preview').html('<div style="border: 2px dashed #ddd; padding: 40px; text-align: center; background: #f9f9f9; color: #666;"><span class="dashicons dashicons-format-image" style="font-size: 48px; width: 48px; height: 48px;"></span><p><?php esc_html_e('No image selected', 'designmaster-ads'); ?></p></div>');
                 $(this).remove();
             });
         });
@@ -195,38 +195,38 @@ class DM_Ads_Banner {
         ?>
         <table class="form-table">
             <tr>
-                <th><label for="dm_banner_url"><?php _e('Target URL', 'designmaster-ads'); ?></label></th>
+                <th><label for="dm_banner_url"><?php esc_html_e('Target URL', 'designmaster-ads'); ?></label></th>
                 <td>
                     <input type="url" id="dm_banner_url" name="dm_banner_url" value="<?php echo esc_url($target_url); ?>" class="widefat">
-                    <p class="description"><?php _e('URL to redirect when banner is clicked', 'designmaster-ads'); ?></p>
+                    <p class="description"><?php esc_html_e('URL to redirect when banner is clicked', 'designmaster-ads'); ?></p>
                 </td>
             </tr>
             <tr>
-                <th><label for="dm_banner_zone"><?php _e('Banner Zone', 'designmaster-ads'); ?></label></th>
+                <th><label for="dm_banner_zone"><?php esc_html_e('Banner Zone', 'designmaster-ads'); ?></label></th>
                 <td>
                     <select id="dm_banner_zone" name="dm_banner_zone" class="widefat">
-                        <option value=""><?php _e('Select a zone', 'designmaster-ads'); ?></option>
+                        <option value=""><?php esc_html_e('Select a zone', 'designmaster-ads'); ?></option>
                         <?php foreach ($zones as $z): ?>
                             <option value="<?php echo esc_attr($z['slug']); ?>" <?php selected($zone, $z['slug']); ?>>
-                                <?php echo esc_html($z['name']); ?> (<?php echo $z['width']; ?>x<?php echo $z['height']; ?>)
+                                <?php echo esc_html($z['name']); ?> (<?php echo esc_html($z['width']); ?>x<?php echo esc_html($z['height']); ?>)
                             </option>
                         <?php endforeach; ?>
                     </select>
                 </td>
             </tr>
             <tr>
-                <th><label for="dm_banner_priority"><?php _e('Priority', 'designmaster-ads'); ?></label></th>
+                <th><label for="dm_banner_priority"><?php esc_html_e('Priority', 'designmaster-ads'); ?></label></th>
                 <td>
                     <input type="number" id="dm_banner_priority" name="dm_banner_priority" value="<?php echo esc_attr($priority); ?>" min="1" max="100" class="small-text">
-                    <p class="description"><?php _e('Higher priority = higher chance of display (1-100)', 'designmaster-ads'); ?></p>
+                    <p class="description"><?php esc_html_e('Higher priority = higher chance of display (1-100)', 'designmaster-ads'); ?></p>
                 </td>
             </tr>
             <tr>
-                <th><label for="dm_banner_status"><?php _e('Status', 'designmaster-ads'); ?></label></th>
+                <th><label for="dm_banner_status"><?php esc_html_e('Status', 'designmaster-ads'); ?></label></th>
                 <td>
                     <select id="dm_banner_status" name="dm_banner_status">
-                        <option value="active" <?php selected($status, 'active'); ?>><?php _e('Active', 'designmaster-ads'); ?></option>
-                        <option value="inactive" <?php selected($status, 'inactive'); ?>><?php _e('Inactive', 'designmaster-ads'); ?></option>
+                        <option value="active" <?php selected($status, 'active'); ?>><?php esc_html_e('Active', 'designmaster-ads'); ?></option>
+                        <option value="inactive" <?php selected($status, 'inactive'); ?>><?php esc_html_e('Inactive', 'designmaster-ads'); ?></option>
                     </select>
                 </td>
             </tr>
@@ -244,14 +244,14 @@ class DM_Ads_Banner {
         $end_date = get_post_meta($post->ID, '_dm_banner_end_date', true);
         ?>
         <p>
-            <label for="dm_banner_start_date"><strong><?php _e('Start Date/Time', 'designmaster-ads'); ?></strong></label><br>
+            <label for="dm_banner_start_date"><strong><?php esc_html_e('Start Date/Time', 'designmaster-ads'); ?></strong></label><br>
             <input type="datetime-local" id="dm_banner_start_date" name="dm_banner_start_date" value="<?php echo esc_attr($start_date); ?>" class="widefat">
         </p>
         <p>
-            <label for="dm_banner_end_date"><strong><?php _e('End Date/Time', 'designmaster-ads'); ?></strong></label><br>
+            <label for="dm_banner_end_date"><strong><?php esc_html_e('End Date/Time', 'designmaster-ads'); ?></strong></label><br>
             <input type="datetime-local" id="dm_banner_end_date" name="dm_banner_end_date" value="<?php echo esc_attr($end_date); ?>" class="widefat">
         </p>
-        <p class="description"><?php _e('Leave empty for no time restrictions', 'designmaster-ads'); ?></p>
+        <p class="description"><?php esc_html_e('Leave empty for no time restrictions', 'designmaster-ads'); ?></p>
         <?php
     }
     
@@ -263,20 +263,20 @@ class DM_Ads_Banner {
         ?>
         <div class="dm-banner-stats">
             <p>
-                <strong><?php _e('Total Views:', 'designmaster-ads'); ?></strong><br>
-                <span class="dm-stat-value"><?php echo number_format($stats['views']); ?></span>
+                <strong><?php esc_html_e('Total Views:', 'designmaster-ads'); ?></strong><br>
+                <span class="dm-stat-value"><?php echo esc_html(number_format($stats['views'])); ?></span>
             </p>
             <p>
-                <strong><?php _e('Total Clicks:', 'designmaster-ads'); ?></strong><br>
-                <span class="dm-stat-value"><?php echo number_format($stats['clicks']); ?></span>
+                <strong><?php esc_html_e('Total Clicks:', 'designmaster-ads'); ?></strong><br>
+                <span class="dm-stat-value"><?php echo esc_html(number_format($stats['clicks'])); ?></span>
             </p>
             <p>
-                <strong><?php _e('CTR (Click-Through Rate):', 'designmaster-ads'); ?></strong><br>
-                <span class="dm-stat-value"><?php echo $stats['ctr']; ?>%</span>
+                <strong><?php esc_html_e('CTR (Click-Through Rate):', 'designmaster-ads'); ?></strong><br>
+                <span class="dm-stat-value"><?php echo esc_html($stats['ctr']); ?>%</span>
             </p>
             <p>
-                <a href="<?php echo admin_url('admin.php?page=dm-ads-analytics&banner_id=' . $post->ID); ?>" class="button button-secondary">
-                    <?php _e('View Detailed Analytics', 'designmaster-ads'); ?>
+                <a href="<?php echo esc_url(admin_url('admin.php?page=dm-ads-analytics&banner_id=' . $post->ID)); ?>" class="button button-secondary">
+                    <?php esc_html_e('View Detailed Analytics', 'designmaster-ads'); ?>
                 </a>
             </p>
         </div>
@@ -446,13 +446,13 @@ class DM_Ads_Banner {
                 }
                 
                 if ($status === 'active' && !$is_expired && !$is_scheduled) {
-                    echo '<span style="color:#46b450;font-weight:600;">● ' . __('Active', 'designmaster-ads') . '</span>';
+                    echo '<span style="color:#46b450;font-weight:600;">● ' . esc_html__('Active', 'designmaster-ads') . '</span>';
                 } elseif ($is_scheduled) {
-                    echo '<span style="color:#00a0d2;font-weight:600;">◐ ' . __('Scheduled', 'designmaster-ads') . '</span>';
+                    echo '<span style="color:#00a0d2;font-weight:600;">◐ ' . esc_html__('Scheduled', 'designmaster-ads') . '</span>';
                 } elseif ($is_expired) {
-                    echo '<span style="color:#dc3232;font-weight:600;">● ' . __('Expired', 'designmaster-ads') . '</span>';
+                    echo '<span style="color:#dc3232;font-weight:600;">● ' . esc_html__('Expired', 'designmaster-ads') . '</span>';
                 } else {
-                    echo '<span style="color:#999;font-weight:600;">○ ' . __('Inactive', 'designmaster-ads') . '</span>';
+                    echo '<span style="color:#999;font-weight:600;">○ ' . esc_html__('Inactive', 'designmaster-ads') . '</span>';
                 }
                 break;
                 
@@ -465,7 +465,7 @@ class DM_Ads_Banner {
                     elseif ($priority >= 40) $color = '#00a0d2';
                     elseif ($priority >= 20) $color = '#46b450';
                     
-                    echo '<span style="color:' . $color . ';font-weight:600;font-size:16px;">' . esc_html($priority) . '</span>';
+                    echo '<span style="color:' . esc_attr($color) . ';font-weight:600;font-size:16px;">' . esc_html($priority) . '</span>';
                 } else {
                     echo '<span style="color:#999;">50</span>';
                 }
@@ -477,13 +477,13 @@ class DM_Ads_Banner {
                 
                 if ($start_date || $end_date) {
                     if ($start_date) {
-                        echo '<strong>' . __('Start:', 'designmaster-ads') . '</strong> ' . date_i18n('d/m/Y H:i', strtotime($start_date)) . '<br>';
+                        echo '<strong>' . esc_html__('Start:', 'designmaster-ads') . '</strong> ' . esc_html(date_i18n('d/m/Y H:i', strtotime($start_date))) . '<br>';
                     }
                     if ($end_date) {
-                        echo '<strong>' . __('End:', 'designmaster-ads') . '</strong> ' . date_i18n('d/m/Y H:i', strtotime($end_date));
+                        echo '<strong>' . esc_html__('End:', 'designmaster-ads') . '</strong> ' . esc_html(date_i18n('d/m/Y H:i', strtotime($end_date)));
                     }
                 } else {
-                    echo '<span style="color:#999;">∞ ' . __('Always', 'designmaster-ads') . '</span>';
+                    echo '<span style="color:#999;">∞ ' . esc_html__('Always', 'designmaster-ads') . '</span>';
                 }
                 break;
                 
@@ -493,7 +493,7 @@ class DM_Ads_Banner {
                     "SELECT SUM(views) FROM $table_name WHERE banner_id = %d",
                     $post_id
                 ));
-                echo '<strong>' . number_format_i18n($views ? $views : 0) . '</strong>';
+                echo '<strong>' . esc_html(number_format_i18n($views ? $views : 0)) . '</strong>';
                 break;
                 
             case 'clicks':
@@ -502,7 +502,7 @@ class DM_Ads_Banner {
                     "SELECT SUM(clicks) FROM $table_name WHERE banner_id = %d",
                     $post_id
                 ));
-                echo '<strong>' . number_format_i18n($clicks ? $clicks : 0) . '</strong>';
+                echo '<strong>' . esc_html(number_format_i18n($clicks ? $clicks : 0)) . '</strong>';
                 break;
                 
             case 'ctr':
@@ -519,7 +519,7 @@ class DM_Ads_Banner {
                     elseif ($ctr >= 2) $color = '#00a0d2';
                     elseif ($ctr >= 1) $color = '#f56e28';
                     
-                    echo '<span style="color:' . $color . ';font-weight:600;">' . number_format_i18n($ctr, 2) . '%</span>';
+                    echo '<span style="color:' . esc_attr($color) . ';font-weight:600;">' . esc_html(number_format_i18n($ctr, 2)) . '%</span>';
                 } else {
                     echo '<span style="color:#999;">0%</span>';
                 }
