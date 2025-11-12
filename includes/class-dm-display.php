@@ -37,6 +37,15 @@ class DM_Ads_Display {
             true
         );
         
+        // Lazy loading script
+        wp_enqueue_script(
+            $this->plugin_name . '-lazy-loading',
+            DM_ADS_PLUGIN_URL . 'assets/js/lazy-loading.js',
+            array(),
+            $this->version,
+            true
+        );
+        
         // Localize script for AJAX
         wp_localize_script($this->plugin_name, 'dmAds', array(
             'ajaxUrl' => admin_url('admin-ajax.php'),

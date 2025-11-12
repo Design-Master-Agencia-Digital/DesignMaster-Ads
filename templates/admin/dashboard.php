@@ -18,9 +18,27 @@ $total_ctr = $total_views > 0 ? round(($total_clicks / $total_views) * 100, 2) :
 
 // Count active banners
 $active_banners = wp_count_posts('dm_banner')->publish;
+
+// Prepare chart data
+$chart_labels = array();
+$chart_views = array();
+$chart_clicks = array();
+foreach ($stats_7_days as $stat) {
+    $chart_labels[] = date_i18n('d/m', strtotime($stat['date']));
+    $chart_views[] = $stat['views'];
+    $chart_clicks[] = $stat['clicks'];
+}
+
+// Device stats for pie chart
+$device_labels = array();
+$device_data = array();
+foreach ($device_stats as $device => $stats) {
+    $device_labels[] = ucfirst($device);
+    $device_data[] = $stats['views'];
+}
 ?>
 
-<div class="wrap">
+<div class="wrap dm-ads-dashboard">
     <div class="dm-ads-admin-header">
         <h1><?php esc_html_e('DesignMaster Ads Dashboard', 'designmaster-ads'); ?></h1>
         <p><?php esc_html_e('Overview of your banner performance and statistics', 'designmaster-ads'); ?></p>
@@ -88,19 +106,142 @@ $active_banners = wp_count_posts('dm_banner')->publish;
         </table>
     </div>
 
+    <!-- Performance Charts -->
+    <div style="display: grid; grid-template-columns: 2fr 1fr; gap: 20px; margin-top: 20px;">
+        <!-- Views & Clicks Chart -->
+        <div class="dm-ads-chart-container">
+            <h2><?php esc_html_e('Performance Trend (Last 7 Days)', 'designmaster-ads'); ?></h2>
+            <canvas id="dm-ads-performance-chart" style="max-height: 300px;"></canvas>
+        </div>
+
+        <!-- Device Distribution Chart -->
+        <div class="dm-ads-chart-container">
+            <h2><?php esc_html_e('Views by Device', 'designmaster-ads'); ?></h2>
+            <canvas id="dm-ads-device-chart" style="max-height: 300px;"></canvas>
+        </div>
+    </div>
+
     <!-- Quick Links -->
     <div class="dm-ads-chart-container">
         <h2><?php esc_html_e('Quick Actions', 'designmaster-ads'); ?></h2>
         <p>
             <a href="<?php echo esc_url(admin_url('post-new.php?post_type=dm_banner')); ?>" class="button button-primary">
+                <span class="dashicons dashicons-plus-alt" style="margin-top: 3px;"></span>
                 <?php esc_html_e('Add New Banner', 'designmaster-ads'); ?>
             </a>
             <a href="<?php echo esc_url(admin_url('admin.php?page=dm-ads-zones')); ?>" class="button">
+                <span class="dashicons dashicons-admin-settings" style="margin-top: 3px;"></span>
                 <?php esc_html_e('Manage Zones', 'designmaster-ads'); ?>
             </a>
             <a href="<?php echo esc_url(admin_url('admin.php?page=dm-ads-analytics')); ?>" class="button">
+                <span class="dashicons dashicons-chart-bar" style="margin-top: 3px;"></span>
                 <?php esc_html_e('View Detailed Analytics', 'designmaster-ads'); ?>
             </a>
         </p>
     </div>
 </div>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    // Performance Trend Chart
+    const performanceCtx = document.getElementById('dm-ads-performance-chart');
+    if (performanceCtx) {
+        new Chart(performanceCtx, {
+            type: 'line',
+            data: {
+                labels: <?php echo json_encode($chart_labels); ?>,
+                datasets: [{
+                    label: '<?php esc_html_e('Views', 'designmaster-ads'); ?>',
+                    data: <?php echo json_encode($chart_views); ?>,
+                    borderColor: 'rgb(75, 192, 192)',
+                    backgroundColor: 'rgba(75, 192, 192, 0.1)',
+                    tension: 0.4,
+                    fill: true
+                }, {
+                    label: '<?php esc_html_e('Clicks', 'designmaster-ads'); ?>',
+                    data: <?php echo json_encode($chart_clicks); ?>,
+                    borderColor: 'rgb(255, 99, 132)',
+                    backgroundColor: 'rgba(255, 99, 132, 0.1)',
+                    tension: 0.4,
+                    fill: true
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: true,
+                plugins: {
+                    legend: {
+                        display: true,
+                        position: 'top',
+                    },
+                    tooltip: {
+                        mode: 'index',
+                        intersect: false,
+                    }
+                },
+                scales: {
+                    y: {
+                        beginAtZero: true,
+                        ticks: {
+                            precision: 0
+                        }
+                    }
+                },
+                interaction: {
+                    mode: 'nearest',
+                    axis: 'x',
+                    intersect: false
+                }
+            }
+        });
+    }
+
+    // Device Distribution Chart
+    const deviceCtx = document.getElementById('dm-ads-device-chart');
+    if (deviceCtx && <?php echo json_encode($device_data); ?>.length > 0) {
+        new Chart(deviceCtx, {
+            type: 'doughnut',
+            data: {
+                labels: <?php echo json_encode($device_labels); ?>,
+                datasets: [{
+                    data: <?php echo json_encode($device_data); ?>,
+                    backgroundColor: [
+                        'rgba(54, 162, 235, 0.8)',
+                        'rgba(255, 206, 86, 0.8)',
+                        'rgba(75, 192, 192, 0.8)',
+                        'rgba(153, 102, 255, 0.8)',
+                    ],
+                    borderColor: [
+                        'rgba(54, 162, 235, 1)',
+                        'rgba(255, 206, 86, 1)',
+                        'rgba(75, 192, 192, 1)',
+                        'rgba(153, 102, 255, 1)',
+                    ],
+                    borderWidth: 2
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: true,
+                plugins: {
+                    legend: {
+                        display: true,
+                        position: 'bottom',
+                    }
+                }
+            }
+        });
+    }
+
+    // Animate stat cards on load
+    document.querySelectorAll('.dm-ads-stat-card').forEach((card, index) => {
+        card.style.opacity = '0';
+        card.style.transform = 'translateY(20px)';
+        setTimeout(() => {
+            card.style.transition = 'all 0.5s ease';
+            card.style.opacity = '1';
+            card.style.transform = 'translateY(0)';
+        }, index * 100);
+    });
+});
+</script>

@@ -1,7 +1,7 @@
 === DesignMaster Ads ===
 Contributors: alandebortolo
 Donate link: https://seusite.com/donate
-Tags: banner, ads, advertising, statistics, analytics, rotation, shortcode
+Tags: banner, ads, advertising, statistics, analytics, rotation, shortcode, charts, lazy-loading, performance
 Requires at least: 5.8
 Tested up to: 6.8
 Stable tag: 1.1.0
@@ -9,11 +9,11 @@ Requires PHP: 7.4
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
-Sistema completo de gestão de banners com analytics avançado, rotação inteligente e estatísticas detalhadas.
+Sistema completo de gestão de banners com analytics avançado, gráficos visuais, lazy loading, rotação inteligente e estatísticas detalhadas.
 
 == Description ==
 
-DesignMaster Ads é um plugin completo para gestão de banners publicitários no WordPress, com sistema avançado de analytics e múltiplos tipos de rotação.
+DesignMaster Ads é um plugin completo para gestão de banners publicitários no WordPress, com sistema avançado de analytics, gráficos visuais interativos e otimizações de performance com lazy loading.
 
 = Recursos Principais =
 
@@ -31,25 +31,35 @@ DesignMaster Ads é um plugin completo para gestão de banners publicitários no
   * Shortcode simples: `[dm_ads zone="slug"]`
 
 * **Analytics Poderoso**
-  * Gráficos interativos com Chart.js
-  * Visualizações e cliques
-  * Taxa de cliques (CTR)
-  * Distribuição por dispositivo (desktop/mobile/tablet)
-  * Performance por hora do dia
-  * Top banners por desempenho
-  * Exportação para CSV
-  * Período personalizado de datas
+  * 📊 Gráficos interativos com Chart.js
+  * 📈 Gráfico de tendência de performance (7 dias)
+  * 🥧 Gráfico de distribuição por dispositivo
+  * 👁️ Visualizações e cliques em tempo real
+  * 📊 Taxa de cliques (CTR) detalhada
+  * 📱 Distribuição por dispositivo (desktop/mobile/tablet)
+  * ⏰ Performance por hora do dia
+  * 🏆 Top banners por desempenho
+  * 📥 Exportação para CSV
+  * 📅 Período personalizado de datas
+
+* **Performance e Otimização**
+  * 🚀 Lazy loading nativo de imagens
+  * ⚡ JavaScript fallback com IntersectionObserver
+  * 💫 Animações suaves e modernas
+  * 🎨 UI/UX aprimorada com gradientes e hover effects
+  * 📦 Cache inteligente de consultas
 
 * **Privacidade**
-  * LGPD/GDPR compliant
-  * Anonimização de IP (opcional)
-  * Sem rastreamento externo
-  * Dados armazenados localmente
+  * 🔒 LGPD/GDPR compliant
+  * 🛡️ Anonimização de IP (opcional)
+  * 🏠 Sem rastreamento externo
+  * 💾 Dados armazenados localmente
 
 * **Traduções**
-  * Português (Brasil) - 100%
-  * Inglês - 100%
-  * Translation-ready (.pot incluído)
+  * 🇧🇷 Português (Brasil) - 100%
+  * 🇺🇸 Inglês - 100%
+  * 🌐 Translation-ready (.pot incluído)
+  * ✅ Mais de 150 strings traduzidas
 
 = Como Usar =
 

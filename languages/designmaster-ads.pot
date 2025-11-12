@@ -97,7 +97,454 @@ msgid "Inactive"
 msgstr "Inativo"
 
 msgid "Schedule"
-msgstr "Agendamento"
+msgstr ""
+
+msgid "Start Date/Time"
+msgstr ""
+
+msgid "End Date/Time"
+msgstr ""
+
+msgid "Leave empty for no time restrictions"
+msgstr ""
+
+msgid "Statistics"
+msgstr ""
+
+msgid "Total Views:"
+msgstr ""
+
+msgid "Total Clicks:"
+msgstr ""
+
+msgid "CTR (Click-Through Rate):"
+msgstr ""
+
+msgid "View Detailed Analytics"
+msgstr ""
+
+msgid "Analytics"
+msgstr ""
+
+msgid "Banner Zones"
+msgstr ""
+
+msgid "Zones"
+msgstr ""
+
+msgid "Dashboard"
+msgstr ""
+
+msgid "Settings"
+msgstr ""
+
+msgid "DesignMaster Ads Dashboard"
+msgstr ""
+
+msgid "Overview of your banner performance and statistics"
+msgstr ""
+
+msgid "Total Views (30 days)"
+msgstr ""
+
+msgid "Banner impressions"
+msgstr ""
+
+msgid "Total Clicks (30 days)"
+msgstr ""
+
+msgid "User interactions"
+msgstr ""
+
+msgid "Average CTR"
+msgstr ""
+
+msgid "Click-through rate"
+msgstr ""
+
+msgid "Active Banners"
+msgstr ""
+
+msgid "Currently published"
+msgstr ""
+
+msgid "Top 5 Performing Banners (Last 30 Days)"
+msgstr ""
+
+msgid "Views"
+msgstr ""
+
+msgid "Clicks"
+msgstr ""
+
+msgid "CTR"
+msgstr ""
+
+msgid "No data available yet"
+msgstr ""
+
+msgid "Quick Actions"
+msgstr ""
+
+msgid "Manage Zones"
+msgstr ""
+
+msgid "Performance Trend (Last 7 Days)"
+msgstr ""
+
+msgid "Daily Views"
+msgstr ""
+
+msgid "Daily Clicks"
+msgstr ""
+
+msgid "Views by Device Type"
+msgstr ""
+
+msgid "Desktop"
+msgstr ""
+
+msgid "Mobile"
+msgstr ""
+
+msgid "Tablet"
+msgstr ""
+
+msgid "Other"
+msgstr ""
+
+msgid "Loading chart data..."
+msgstr ""
+
+msgid "No chart data available"
+msgstr ""
+
+msgid "Analytics & Statistics"
+msgstr ""
+
+msgid "Detailed performance metrics and insights"
+msgstr ""
+
+msgid "Date Range:"
+msgstr ""
+
+msgid "Last 7 Days"
+msgstr ""
+
+msgid "Last 30 Days"
+msgstr ""
+
+msgid "Last 90 Days"
+msgstr ""
+
+msgid "Custom Period"
+msgstr ""
+
+msgid "Start Date:"
+msgstr ""
+
+msgid "End Date:"
+msgstr ""
+
+msgid "Banner:"
+msgstr ""
+
+msgid "All Banners"
+msgstr ""
+
+msgid "Export to CSV"
+msgstr ""
+
+msgid "Views & Clicks Trend"
+msgstr ""
+
+msgid "Device Distribution"
+msgstr ""
+
+msgid "Top Banners by Clicks"
+msgstr ""
+
+msgid "Performance by Hour"
+msgstr ""
+
+msgid "Banner Zones Management"
+msgstr ""
+
+msgid "Create and manage your banner display zones"
+msgstr ""
+
+msgid "Edit Zone"
+msgstr ""
+
+msgid "Add New Zone"
+msgstr ""
+
+msgid "Zone Name"
+msgstr ""
+
+msgid "Slug"
+msgstr ""
+
+msgid "Used in shortcode: [dm_ads zone=\"slug\"]"
+msgstr ""
+
+msgid "Type"
+msgstr ""
+
+msgid "Fixed (Always same banner)"
+msgstr ""
+
+msgid "Reload (Random per page load)"
+msgstr ""
+
+msgid "Timed (Auto rotate)"
+msgstr ""
+
+msgid "Rotation Interval"
+msgstr ""
+
+msgid "seconds"
+msgstr ""
+
+msgid "Width"
+msgstr ""
+
+msgid "Height"
+msgstr ""
+
+msgid "Create Zone"
+msgstr ""
+
+msgid "Update Zone"
+msgstr ""
+
+msgid "Cancel"
+msgstr ""
+
+msgid "Existing Zones"
+msgstr ""
+
+msgid "Size:"
+msgstr ""
+
+msgid "Shortcode:"
+msgstr ""
+
+msgid "Edit"
+msgstr ""
+
+msgid "Delete"
+msgstr ""
+
+msgid "No zones created yet. Create your first zone to get started!"
+msgstr ""
+
+msgid "Zone saved successfully"
+msgstr ""
+
+msgid "Zone deleted successfully"
+msgstr ""
+
+msgid "DesignMaster Ads Settings"
+msgstr ""
+
+msgid "Configure plugin behavior and tracking options"
+msgstr ""
+
+msgid "Tracking Settings"
+msgstr ""
+
+msgid "Track Banner Views"
+msgstr ""
+
+msgid "Enable view tracking"
+msgstr ""
+
+msgid "Track how many times each banner is displayed"
+msgstr ""
+
+msgid "Track Banner Clicks"
+msgstr ""
+
+msgid "Enable click tracking"
+msgstr ""
+
+msgid "Track when users click on banners"
+msgstr ""
+
+msgid "Anonymize IP Addresses"
+msgstr ""
+
+msgid "Anonymize user IP addresses"
+msgstr ""
+
+msgid "Recommended for GDPR compliance. Last octet of IP will be removed."
+msgstr ""
+
+msgid "Performance Settings"
+msgstr ""
+
+msgid "Cache Time"
+msgstr ""
+
+msgid "How long to cache banner queries. Set to 0 to disable caching."
+msgstr ""
+
+msgid "Default Rotation Time"
+msgstr ""
+
+msgid "Default interval for timed banner rotation"
+msgstr ""
+
+msgid "Save Settings"
+msgstr ""
+
+msgid "Settings saved successfully"
+msgstr ""
+
+msgid "Plugin Information"
+msgstr ""
+
+msgid "Version:"
+msgstr ""
+
+msgid "Database Table:"
+msgstr ""
+
+msgid "Loading banner..."
+msgstr ""
+
+msgid "Banner loaded"
+msgstr ""
+
+msgid "Performance Overview"
+msgstr ""
+
+msgid "Total Impressions"
+msgstr ""
+
+msgid "Unique Clicks"
+msgstr ""
+
+msgid "Engagement Rate"
+msgstr ""
+
+msgid "Create New Banner"
+msgstr ""
+
+msgid "View All Banners"
+msgstr ""
+
+msgid "Import/Export"
+msgstr ""
+
+msgid "Documentation"
+msgstr ""
+
+msgid "Support"
+msgstr ""
+
+msgid "Rate this Plugin"
+msgstr ""
+
+msgid "Click for more details"
+msgstr ""
+
+msgid "Hover to see statistics"
+msgstr ""
+
+msgid "Drag to reorder"
+msgstr ""
+
+msgid "This banner is currently active"
+msgstr ""
+
+msgid "This banner is scheduled"
+msgstr ""
+
+msgid "This banner has expired"
+msgstr ""
+
+msgid "Failed to load banner data"
+msgstr ""
+
+msgid "Invalid zone configuration"
+msgstr ""
+
+msgid "No banners assigned to this zone"
+msgstr ""
+
+msgid "Please select an image"
+msgstr ""
+
+msgid "Please enter a valid URL"
+msgstr ""
+
+msgid "Banner created successfully"
+msgstr ""
+
+msgid "Banner updated successfully"
+msgstr ""
+
+msgid "Banner deleted successfully"
+msgstr ""
+
+msgid "Statistics updated"
+msgstr ""
+
+msgid "Enable lazy loading"
+msgstr ""
+
+msgid "Lazy load images for better performance"
+msgstr ""
+
+msgid "Use native browser lazy loading with JavaScript fallback"
+msgstr ""
+
+msgid "Enable analytics charts"
+msgstr ""
+
+msgid "Show visual charts on dashboard"
+msgstr ""
+
+msgid "Display performance and device distribution charts"
+msgstr ""
+
+msgid "Zone type: Fixed"
+msgstr ""
+
+msgid "Zone type: Reload"
+msgstr ""
+
+msgid "Zone type: Timed"
+msgstr ""
+
+msgid "Filter by status"
+msgstr ""
+
+msgid "Sort by performance"
+msgstr ""
+
+msgid "Sort by date"
+msgstr ""
+
+msgid "Sort by name"
+msgstr ""
+
+msgid "Today"
+msgstr ""
+
+msgid "Yesterday"
+msgstr ""
+
+msgid "This Week"
+msgstr ""
+
+msgid "This Month"
+msgstr ""
+
+msgid "All Time"
+msgstr ""
 
 msgid "Start Date/Time"
 msgstr "Data/Hora de Início"

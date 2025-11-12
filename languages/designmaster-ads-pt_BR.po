@@ -404,3 +404,180 @@ msgstr "Versão:"
 
 msgid "Database Table:"
 msgstr "Tabela do Banco de Dados:"
+
+# Dashboard Charts
+msgid "Performance Trend (Last 7 Days)"
+msgstr "Tendência de Desempenho (Últimos 7 Dias)"
+
+msgid "Daily Views"
+msgstr "Visualizações Diárias"
+
+msgid "Daily Clicks"
+msgstr "Cliques Diários"
+
+msgid "Views by Device Type"
+msgstr "Visualizações por Tipo de Dispositivo"
+
+msgid "Desktop"
+msgstr "Desktop"
+
+msgid "Mobile"
+msgstr "Mobile"
+
+msgid "Tablet"
+msgstr "Tablet"
+
+msgid "Other"
+msgstr "Outro"
+
+msgid "Loading chart data..."
+msgstr "Carregando dados do gráfico..."
+
+msgid "No chart data available"
+msgstr "Nenhum dado de gráfico disponível"
+
+# Lazy Loading
+msgid "Loading banner..."
+msgstr "Carregando banner..."
+
+msgid "Banner loaded"
+msgstr "Banner carregado"
+
+# Performance Metrics
+msgid "Performance Overview"
+msgstr "Visão Geral de Desempenho"
+
+msgid "Total Impressions"
+msgstr "Total de Impressões"
+
+msgid "Unique Clicks"
+msgstr "Cliques Únicos"
+
+msgid "Engagement Rate"
+msgstr "Taxa de Engajamento"
+
+# Admin UI Enhancements
+msgid "Create New Banner"
+msgstr "Criar Novo Banner"
+
+msgid "View All Banners"
+msgstr "Ver Todos os Banners"
+
+msgid "Import/Export"
+msgstr "Importar/Exportar"
+
+msgid "Documentation"
+msgstr "Documentação"
+
+msgid "Support"
+msgstr "Suporte"
+
+msgid "Rate this Plugin"
+msgstr "Avaliar este Plugin"
+
+# Tooltips and Help Text
+msgid "Click for more details"
+msgstr "Clique para mais detalhes"
+
+msgid "Hover to see statistics"
+msgstr "Passe o mouse para ver estatísticas"
+
+msgid "Drag to reorder"
+msgstr "Arraste para reordenar"
+
+msgid "This banner is currently active"
+msgstr "Este banner está ativo no momento"
+
+msgid "This banner is scheduled"
+msgstr "Este banner está agendado"
+
+msgid "This banner has expired"
+msgstr "Este banner expirou"
+
+# Error Messages
+msgid "Failed to load banner data"
+msgstr "Falha ao carregar dados do banner"
+
+msgid "Invalid zone configuration"
+msgstr "Configuração de área inválida"
+
+msgid "No banners assigned to this zone"
+msgstr "Nenhum banner atribuído a esta área"
+
+msgid "Please select an image"
+msgstr "Por favor, selecione uma imagem"
+
+msgid "Please enter a valid URL"
+msgstr "Por favor, insira uma URL válida"
+
+# Success Messages
+msgid "Banner created successfully"
+msgstr "Banner criado com sucesso"
+
+msgid "Banner updated successfully"
+msgstr "Banner atualizado com sucesso"
+
+msgid "Banner deleted successfully"
+msgstr "Banner excluído com sucesso"
+
+msgid "Statistics updated"
+msgstr "Estatísticas atualizadas"
+
+# Advanced Features
+msgid "Enable lazy loading"
+msgstr "Ativar carregamento lento"
+
+msgid "Lazy load images for better performance"
+msgstr "Carregamento lento de imagens para melhor desempenho"
+
+msgid "Use native browser lazy loading with JavaScript fallback"
+msgstr "Use carregamento lento nativo do navegador com fallback JavaScript"
+
+msgid "Enable analytics charts"
+msgstr "Ativar gráficos de análise"
+
+msgid "Show visual charts on dashboard"
+msgstr "Mostrar gráficos visuais no painel"
+
+msgid "Display performance and device distribution charts"
+msgstr "Exibir gráficos de desempenho e distribuição por dispositivo"
+
+# Zone Types
+msgid "Zone type: Fixed"
+msgstr "Tipo de área: Fixo"
+
+msgid "Zone type: Reload"
+msgstr "Tipo de área: Reload"
+
+msgid "Zone type: Timed"
+msgstr "Tipo de área: Temporizado"
+
+# Filter and Sort
+msgid "Filter by status"
+msgstr "Filtrar por status"
+
+msgid "Sort by performance"
+msgstr "Ordenar por desempenho"
+
+msgid "Sort by date"
+msgstr "Ordenar por data"
+
+msgid "Sort by name"
+msgstr "Ordenar por nome"
+
+# Date and Time
+msgid "Today"
+msgstr "Hoje"
+
+msgid "Yesterday"
+msgstr "Ontem"
+
+msgid "This Week"
+msgstr "Esta Semana"
+
+msgid "This Month"
+msgstr "Este Mês"
+
+msgid "All Time"
+msgstr "Todo o Período"
+

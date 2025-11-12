@@ -22,7 +22,9 @@ $interval = isset($zone['rotation_interval']) ? $zone['rotation_interval'] : 5;
                 <img src="<?php echo esc_url($banner['image']); ?>" 
                      alt="<?php echo esc_attr($banner['title']); ?>"
                      width="<?php echo esc_attr($zone['width']); ?>"
-                     height="<?php echo esc_attr($zone['height']); ?>">
+                     height="<?php echo esc_attr($zone['height']); ?>"
+                     loading="lazy"
+                     class="dm-ads-banner-image">
             </a>
         </div>
     <?php endforeach; ?>
