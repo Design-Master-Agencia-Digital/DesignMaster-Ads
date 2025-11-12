@@ -53,29 +53,29 @@ settings_errors('dm_ads_settings');
                 </tr>
             </table>
 
-            <h2><?php _e('Performance Settings', 'designmaster-ads'); ?></h2>
+            <h2><?php esc_html_e('Performance Settings', 'designmaster-ads'); ?></h2>
             <table class="form-table">
                 <tr>
-                    <th><label for="cache_time"><?php _e('Cache Time', 'designmaster-ads'); ?></label></th>
+                    <th><label for="cache_time"><?php esc_html_e('Cache Time', 'designmaster-ads'); ?></label></th>
                     <td>
                         <input type="number" id="cache_time" name="cache_time" value="<?php echo esc_attr($settings['cache_time']); ?>" min="0" class="small-text">
-                        <span><?php _e('seconds', 'designmaster-ads'); ?></span>
-                        <p class="description"><?php _e('How long to cache banner queries. Set to 0 to disable caching.', 'designmaster-ads'); ?></p>
+                        <span><?php esc_html_e('seconds', 'designmaster-ads'); ?></span>
+                        <p class="description"><?php esc_html_e('How long to cache banner queries. Set to 0 to disable caching.', 'designmaster-ads'); ?></p>
                     </td>
                 </tr>
                 <tr>
-                    <th><label for="default_rotation_time"><?php _e('Default Rotation Time', 'designmaster-ads'); ?></label></th>
+                    <th><label for="default_rotation_time"><?php esc_html_e('Default Rotation Time', 'designmaster-ads'); ?></label></th>
                     <td>
                         <input type="number" id="default_rotation_time" name="default_rotation_time" value="<?php echo esc_attr($settings['default_rotation_time']); ?>" min="1" max="60" class="small-text">
-                        <span><?php _e('seconds', 'designmaster-ads'); ?></span>
-                        <p class="description"><?php _e('Default interval for timed banner rotation', 'designmaster-ads'); ?></p>
+                        <span><?php esc_html_e('seconds', 'designmaster-ads'); ?></span>
+                        <p class="description"><?php esc_html_e('Default interval for timed banner rotation', 'designmaster-ads'); ?></p>
                     </td>
                 </tr>
             </table>
 
             <p class="submit">
                 <button type="submit" name="dm_ads_save_settings" class="button button-primary">
-                    <?php _e('Save Settings', 'designmaster-ads'); ?>
+                    <?php esc_html_e('Save Settings', 'designmaster-ads'); ?>
                 </button>
             </p>
         </form>
@@ -83,10 +83,10 @@ settings_errors('dm_ads_settings');
 
     <!-- Plugin Info -->
     <div class="dm-ads-chart-container">
-        <h2><?php _e('Plugin Information', 'designmaster-ads'); ?></h2>
+        <h2><?php esc_html_e('Plugin Information', 'designmaster-ads'); ?></h2>
         <p>
-            <strong><?php _e('Version:', 'designmaster-ads'); ?></strong> <?php echo DM_ADS_VERSION; ?><br>
-            <strong><?php _e('Database Table:', 'designmaster-ads'); ?></strong> <?php echo $GLOBALS['wpdb']->prefix; ?>dm_ads_stats
+            <strong><?php esc_html_e('Version:', 'designmaster-ads'); ?></strong> <?php echo esc_html(DM_ADS_VERSION); ?><br>
+            <strong><?php esc_html_e('Database Table:', 'designmaster-ads'); ?></strong> <?php echo esc_html($GLOBALS['wpdb']->prefix); ?>dm_ads_stats
         </p>
     </div>
 </div>

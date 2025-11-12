@@ -267,7 +267,7 @@ class DM_Ads_Analytics {
             SELECT * FROM $table WHERE $where ORDER BY created_at DESC
         ", ARRAY_A);
         
-        $filename = 'dm-ads-stats-' . date('Y-m-d') . '.csv';
+        $filename = 'dm-ads-stats-' . gmdate('Y-m-d') . '.csv';
         
         header('Content-Type: text/csv');
         header('Content-Disposition: attachment; filename="' . $filename . '"');

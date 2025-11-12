@@ -135,7 +135,7 @@ class DM_Ads_Display {
             $total_weight += intval($banner['priority']);
         }
         
-        $random = mt_rand(1, $total_weight);
+        $random = wp_rand(1, $total_weight);
         $current_weight = 0;
         
         foreach ($banners as $banner) {

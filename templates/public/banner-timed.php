@@ -10,7 +10,7 @@ $interval = isset($zone['rotation_interval']) ? $zone['rotation_interval'] : 5;
 ?>
 
 <div class="dm-ads-container dm-ads-timed" 
-     style="max-width: <?php echo $zone['width']; ?>px;"
+     style="max-width: <?php echo esc_attr($zone['width']); ?>px;"
      data-interval="<?php echo esc_attr($interval); ?>"
      data-zone-id="<?php echo esc_attr($zone['slug']); ?>">
     
@@ -21,8 +21,8 @@ $interval = isset($zone['rotation_interval']) ? $zone['rotation_interval'] : 5;
                rel="noopener noreferrer">
                 <img src="<?php echo esc_url($banner['image']); ?>" 
                      alt="<?php echo esc_attr($banner['title']); ?>"
-                     width="<?php echo $zone['width']; ?>"
-                     height="<?php echo $zone['height']; ?>">
+                     width="<?php echo esc_attr($zone['width']); ?>"
+                     height="<?php echo esc_attr($zone['height']); ?>">
             </a>
         </div>
     <?php endforeach; ?>
@@ -30,7 +30,7 @@ $interval = isset($zone['rotation_interval']) ? $zone['rotation_interval'] : 5;
     <?php if (count($banners) > 1): ?>
         <div class="dm-ads-dots">
             <?php foreach ($banners as $index => $banner): ?>
-                <span class="dm-ads-dot" data-index="<?php echo $index; ?>"></span>
+                <span class="dm-ads-dot" data-index="<?php echo esc_attr($index); ?>"></span>
             <?php endforeach; ?>
         </div>
     <?php endif; ?>
