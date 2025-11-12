@@ -28,7 +28,13 @@ class DM_Ads_Admin {
     /**
      * Enqueue admin scripts
      */
-    public function enqueue_scripts() {
+    public function enqueue_scripts($hook) {
+        // Enqueue media uploader on banner edit screens
+        global $post_type;
+        if ('dm_banner' === $post_type) {
+            wp_enqueue_media();
+        }
+        
         // Chart.js for analytics
         wp_enqueue_script(
             'chartjs',

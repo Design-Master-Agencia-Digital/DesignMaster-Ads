@@ -114,10 +114,13 @@ class DM_Ads_Zone {
                     continue;
                 }
                 
+                $image_id = get_post_meta(get_the_ID(), '_dm_banner_image_id', true);
+                $image_url = $image_id ? wp_get_attachment_url($image_id) : '';
+                
                 $banners[] = array(
                     'id' => get_the_ID(),
                     'title' => get_the_title(),
-                    'image' => get_the_post_thumbnail_url(get_the_ID(), 'full'),
+                    'image' => $image_url,
                     'url' => get_post_meta(get_the_ID(), '_dm_banner_url', true),
                     'priority' => get_post_meta(get_the_ID(), '_dm_banner_priority', true)
                 );

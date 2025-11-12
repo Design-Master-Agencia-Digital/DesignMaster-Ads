@@ -38,7 +38,7 @@ class DM_Ads_Banner {
             'show_in_menu' => true,
             'menu_icon' => 'dashicons-megaphone',
             'menu_position' => 25,
-            'supports' => array('title', 'thumbnail'),
+            'supports' => array('title'),
             'has_archive' => false,
             'rewrite' => false,
             'capability_type' => 'post',
@@ -52,6 +52,15 @@ class DM_Ads_Banner {
      * Add meta boxes
      */
     public function add_meta_boxes() {
+        add_meta_box(
+            'dm_banner_image',
+            __('Banner Image', 'designmaster-ads'),
+            array($this, 'render_image_meta_box'),
+            'dm_banner',
+            'normal',
+            'high'
+        );
+        
         add_meta_box(
             'dm_banner_settings',
             __('Banner Settings', 'designmaster-ads'),
@@ -78,6 +87,92 @@ class DM_Ads_Banner {
             'side',
             'default'
         );
+    }
+    
+    /**
+     * Render image upload meta box
+     */
+    public function render_image_meta_box($post) {
+        wp_nonce_field('dm_banner_image', 'dm_banner_image_nonce');
+        
+        $image_id = get_post_meta($post->ID, '_dm_banner_image_id', true);
+        $image_url = $image_id ? wp_get_attachment_url($image_id) : '';
+        ?>
+        <div class="dm-banner-image-container">
+            <div class="dm-banner-image-preview" style="margin-bottom: 10px;">
+                <?php if ($image_url): ?>
+                    <img src="<?php echo esc_url($image_url); ?>" style="max-width: 100%; height: auto; border: 1px solid #ddd; padding: 5px; background: #f9f9f9;">
+                <?php else: ?>
+                    <div style="border: 2px dashed #ddd; padding: 40px; text-align: center; background: #f9f9f9; color: #666;">
+                        <span class="dashicons dashicons-format-image" style="font-size: 48px; width: 48px; height: 48px;"></span>
+                        <p><?php _e('No image selected', 'designmaster-ads'); ?></p>
+                    </div>
+                <?php endif; ?>
+            </div>
+            
+            <input type="hidden" id="dm_banner_image_id" name="dm_banner_image_id" value="<?php echo esc_attr($image_id); ?>">
+            
+            <p>
+                <button type="button" class="button button-primary dm-upload-image-button">
+                    <span class="dashicons dashicons-upload" style="margin-top: 3px;"></span>
+                    <?php _e('Upload Image', 'designmaster-ads'); ?>
+                </button>
+                
+                <?php if ($image_url): ?>
+                    <button type="button" class="button dm-remove-image-button">
+                        <span class="dashicons dashicons-no" style="margin-top: 3px;"></span>
+                        <?php _e('Remove Image', 'designmaster-ads'); ?>
+                    </button>
+                <?php endif; ?>
+            </p>
+            
+            <p class="description">
+                <?php _e('Click to upload or select an image for this banner', 'designmaster-ads'); ?>
+            </p>
+        </div>
+        
+        <script>
+        jQuery(document).ready(function($) {
+            var mediaUploader;
+            
+            $('.dm-upload-image-button').on('click', function(e) {
+                e.preventDefault();
+                
+                if (mediaUploader) {
+                    mediaUploader.open();
+                    return;
+                }
+                
+                mediaUploader = wp.media({
+                    title: '<?php _e('Select Banner Image', 'designmaster-ads'); ?>',
+                    button: {
+                        text: '<?php _e('Use this image', 'designmaster-ads'); ?>'
+                    },
+                    multiple: false
+                });
+                
+                mediaUploader.on('select', function() {
+                    var attachment = mediaUploader.state().get('selection').first().toJSON();
+                    $('#dm_banner_image_id').val(attachment.id);
+                    $('.dm-banner-image-preview').html('<img src="' + attachment.url + '" style="max-width: 100%; height: auto; border: 1px solid #ddd; padding: 5px; background: #f9f9f9;">');
+                    
+                    if ($('.dm-remove-image-button').length === 0) {
+                        $('.dm-upload-image-button').after('<button type="button" class="button dm-remove-image-button"><span class="dashicons dashicons-no" style="margin-top: 3px;"></span> <?php _e('Remove Image', 'designmaster-ads'); ?></button>');
+                    }
+                });
+                
+                mediaUploader.open();
+            });
+            
+            $(document).on('click', '.dm-remove-image-button', function(e) {
+                e.preventDefault();
+                $('#dm_banner_image_id').val('');
+                $('.dm-banner-image-preview').html('<div style="border: 2px dashed #ddd; padding: 40px; text-align: center; background: #f9f9f9; color: #666;"><span class="dashicons dashicons-format-image" style="font-size: 48px; width: 48px; height: 48px;"></span><p><?php _e('No image selected', 'designmaster-ads'); ?></p></div>');
+                $(this).remove();
+            });
+        });
+        </script>
+        <?php
     }
     
     /**
@@ -187,15 +282,6 @@ class DM_Ads_Banner {
      * Save meta boxes
      */
     public function save_meta_boxes($post_id) {
-        // Check nonces
-        if (!isset($_POST['dm_banner_settings_nonce']) || !wp_verify_nonce($_POST['dm_banner_settings_nonce'], 'dm_banner_settings')) {
-            return;
-        }
-        
-        if (!isset($_POST['dm_banner_schedule_nonce']) || !wp_verify_nonce($_POST['dm_banner_schedule_nonce'], 'dm_banner_schedule')) {
-            return;
-        }
-        
         // Check autosave
         if (defined('DOING_AUTOSAVE') && DOING_AUTOSAVE) {
             return;
@@ -206,30 +292,41 @@ class DM_Ads_Banner {
             return;
         }
         
+        // Save image
+        if (isset($_POST['dm_banner_image_nonce']) && wp_verify_nonce($_POST['dm_banner_image_nonce'], 'dm_banner_image')) {
+            if (isset($_POST['dm_banner_image_id'])) {
+                update_post_meta($post_id, '_dm_banner_image_id', absint($_POST['dm_banner_image_id']));
+            }
+        }
+        
         // Save settings
-        if (isset($_POST['dm_banner_url'])) {
-            update_post_meta($post_id, '_dm_banner_url', esc_url_raw($_POST['dm_banner_url']));
-        }
-        
-        if (isset($_POST['dm_banner_zone'])) {
-            update_post_meta($post_id, '_dm_banner_zone', sanitize_text_field($_POST['dm_banner_zone']));
-        }
-        
-        if (isset($_POST['dm_banner_priority'])) {
-            update_post_meta($post_id, '_dm_banner_priority', absint($_POST['dm_banner_priority']));
-        }
-        
-        if (isset($_POST['dm_banner_status'])) {
-            update_post_meta($post_id, '_dm_banner_status', sanitize_text_field($_POST['dm_banner_status']));
+        if (isset($_POST['dm_banner_settings_nonce']) && wp_verify_nonce($_POST['dm_banner_settings_nonce'], 'dm_banner_settings')) {
+            if (isset($_POST['dm_banner_url'])) {
+                update_post_meta($post_id, '_dm_banner_url', esc_url_raw($_POST['dm_banner_url']));
+            }
+            
+            if (isset($_POST['dm_banner_zone'])) {
+                update_post_meta($post_id, '_dm_banner_zone', sanitize_text_field($_POST['dm_banner_zone']));
+            }
+            
+            if (isset($_POST['dm_banner_priority'])) {
+                update_post_meta($post_id, '_dm_banner_priority', absint($_POST['dm_banner_priority']));
+            }
+            
+            if (isset($_POST['dm_banner_status'])) {
+                update_post_meta($post_id, '_dm_banner_status', sanitize_text_field($_POST['dm_banner_status']));
+            }
         }
         
         // Save schedule
-        if (isset($_POST['dm_banner_start_date'])) {
-            update_post_meta($post_id, '_dm_banner_start_date', sanitize_text_field($_POST['dm_banner_start_date']));
-        }
-        
-        if (isset($_POST['dm_banner_end_date'])) {
-            update_post_meta($post_id, '_dm_banner_end_date', sanitize_text_field($_POST['dm_banner_end_date']));
+        if (isset($_POST['dm_banner_schedule_nonce']) && wp_verify_nonce($_POST['dm_banner_schedule_nonce'], 'dm_banner_schedule')) {
+            if (isset($_POST['dm_banner_start_date'])) {
+                update_post_meta($post_id, '_dm_banner_start_date', sanitize_text_field($_POST['dm_banner_start_date']));
+            }
+            
+            if (isset($_POST['dm_banner_end_date'])) {
+                update_post_meta($post_id, '_dm_banner_end_date', sanitize_text_field($_POST['dm_banner_end_date']));
+            }
         }
     }
 }

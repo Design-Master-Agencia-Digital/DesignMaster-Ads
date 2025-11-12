@@ -27,8 +27,27 @@ class DM_Ads {
         $this->plugin_name = 'designmaster-ads';
         
         $this->load_dependencies();
+        $this->load_textdomain();
         $this->define_admin_hooks();
         $this->define_public_hooks();
+    }
+    
+    /**
+     * Load plugin text domain for translations
+     */
+    private function load_textdomain() {
+        add_action('plugins_loaded', array($this, 'load_plugin_textdomain'));
+    }
+    
+    /**
+     * Load the plugin text domain for translation
+     */
+    public function load_plugin_textdomain() {
+        load_plugin_textdomain(
+            'designmaster-ads',
+            false,
+            dirname(DM_ADS_PLUGIN_BASENAME) . '/languages/'
+        );
     }
     
     /**
