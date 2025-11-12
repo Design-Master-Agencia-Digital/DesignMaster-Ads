@@ -60,6 +60,9 @@ msgstr "Agendado"
 msgid "Expired"
 msgstr "Expirado"
 
+msgid "Expiring soon"
+msgstr "Expirando em breve"
+
 msgid "Start:"
 msgstr "Início:"
 

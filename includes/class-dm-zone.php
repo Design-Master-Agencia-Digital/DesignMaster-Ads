@@ -86,7 +86,7 @@ class DM_Ads_Zone {
             'order' => 'DESC'
         );
         
-        // Filter by schedule
+        // Filter by schedule - start date
         $args['meta_query'][] = array(
             'relation' => 'OR',
             array(
@@ -98,6 +98,11 @@ class DM_Ads_Zone {
             array(
                 'key' => '_dm_banner_start_date',
                 'compare' => 'NOT EXISTS'
+            ),
+            array(
+                'key' => '_dm_banner_start_date',
+                'value' => '',
+                'compare' => '='
             )
         );
         
@@ -108,14 +113,19 @@ class DM_Ads_Zone {
             while ($query->have_posts()) {
                 $query->the_post();
                 
-                // Check end date
+                // Check end date using current_time for consistency
                 $end_date = get_post_meta(get_the_ID(), '_dm_banner_end_date', true);
-                if ($end_date && strtotime($end_date) < time()) {
+                if ($end_date && $end_date < current_time('mysql')) {
                     continue;
                 }
                 
                 $image_id = get_post_meta(get_the_ID(), '_dm_banner_image_id', true);
                 $image_url = $image_id ? wp_get_attachment_url($image_id) : '';
+                
+                // Skip banner if no image
+                if (empty($image_url)) {
+                    continue;
+                }
                 
                 $banners[] = array(
                     'id' => get_the_ID(),

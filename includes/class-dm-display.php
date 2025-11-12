@@ -68,12 +68,20 @@ class DM_Ads_Display {
         $zone = DM_Ads_Zone::get_zone($zone_slug);
         
         if (!$zone) {
+            // Debug mode - show error for admins
+            if (current_user_can('manage_options') && defined('WP_DEBUG') && WP_DEBUG) {
+                return '<!-- DM Ads Debug: Zone "' . esc_html($zone_slug) . '" not found -->';
+            }
             return '';
         }
         
         $banners = DM_Ads_Zone::get_zone_banners($zone_slug);
         
         if (empty($banners)) {
+            // Debug mode - show error for admins
+            if (current_user_can('manage_options') && defined('WP_DEBUG') && WP_DEBUG) {
+                return '<!-- DM Ads Debug: No active banners found for zone "' . esc_html($zone_slug) . '" -->';
+            }
             return '';
         }
         
