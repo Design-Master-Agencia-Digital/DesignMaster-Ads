@@ -1,6 +1,5 @@
 === DesignMaster Ads ===
 Contributors: alandebortolo
-Donate link: https://seusite.com/donate
 Tags: banner, ads, advertising, statistics, analytics, rotation, shortcode, charts, lazy-loading, performance
 Requires at least: 5.8
 Tested up to: 6.8
@@ -9,94 +8,87 @@ Requires PHP: 7.4
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
-Sistema completo de gestão de banners com analytics avançado, gráficos visuais, lazy loading, rotação inteligente e estatísticas detalhadas.
+Complete banner management system with advanced analytics, visual charts, lazy loading, smart rotation, and detailed statistics.
 
 == Description ==
 
-DesignMaster Ads é um plugin completo para gestão de banners publicitários no WordPress, com sistema avançado de analytics, gráficos visuais interativos e otimizações de performance com lazy loading.
+DesignMaster Ads is a complete plugin for managing advertising banners in WordPress, featuring an advanced analytics system, interactive visual charts, and performance optimizations with lazy loading.
 
-= Recursos Principais =
+= Key Features =
 
-* **Gestão Completa de Banners**
-  * Upload de imagens via WordPress Media Library
-  * URLs de destino configuráveis
-  * Sistema de agendamento (data/hora início e fim)
-  * Status ativo/inativo
-  * Sistema de prioridade (peso 1-100)
+* **Complete Banner Management**
+  * Image upload via WordPress Media Library
+  * Configurable target URLs
+  * Scheduling system (start and end date/time)
+  * Active/Inactive status
+  * Priority system (weight 1-100)
 
-* **Áreas de Banner (Zones)**
-  * Banner Fixo (sempre o mesmo)
-  * Rotação por Reload (aleatório a cada carregamento)
-  * Rotação Temporizada (muda automaticamente)
-  * Shortcode simples: `[dm_ads zone="slug"]`
+* **Banner Zones**
+  * Fixed Banner (always the same)
+  * Rotation on Reload (random on each load)
+  * Timed Rotation (changes automatically)
+  * Simple shortcode: `[dm_ads zone="slug"]`
 
-* **Analytics Poderoso**
-  * 📊 Gráficos interativos com Chart.js
-  * 📈 Gráfico de tendência de performance (7 dias)
-  * 🥧 Gráfico de distribuição por dispositivo
-  * 👁️ Visualizações e cliques em tempo real
-  * 📊 Taxa de cliques (CTR) detalhada
-  * 📱 Distribuição por dispositivo (desktop/mobile/tablet)
-  * ⏰ Performance por hora do dia
-  * 🏆 Top banners por desempenho
-  * 📥 Exportação para CSV
-  * 📅 Período personalizado de datas
+* **Powerful Analytics**
+  * 📊 Interactive charts with Chart.js
+  * 📈 Performance trend chart (7 days)
+  * 🥧 Device distribution chart
+  * 👁️ Real-time views and clicks
+  * 📊 Detailed Click-Through Rate (CTR)
+  * 📱 Device distribution (desktop/mobile/tablet)
+  * ⏰ Performance by hour of day
+  * 🏆 Top banners by performance
+  * 📥 Export to CSV
+  * 📅 Custom date range
 
-* **Performance e Otimização**
-  * 🚀 Lazy loading nativo de imagens
-  * ⚡ JavaScript fallback com IntersectionObserver
-  * 💫 Animações suaves e modernas
-  * 🎨 UI/UX aprimorada com gradientes e hover effects
-  * 📦 Cache inteligente de consultas
+* **Performance and Optimization**
+  * 🚀 Native image lazy loading
+  * ⚡ JavaScript fallback with IntersectionObserver
+  * 💫 Smooth and modern animations
+  * 🎨 Enhanced UI/UX with gradients and hover effects
+  * 📦 Smart query caching
 
-* **Privacidade**
-  * 🔒 LGPD/GDPR compliant
-  * 🛡️ Anonimização de IP (opcional)
-  * 🏠 Sem rastreamento externo
-  * 💾 Dados armazenados localmente
+* **Privacy**
+  * 🔒 GDPR/LGPD compliant
+  * 🛡️ IP Anonymization (optional)
+  * 🏠 No external tracking
+  * 💾 Data stored locally
 
-* **Traduções**
-  * 🇧🇷 Português (Brasil) - 100%
-  * 🇺🇸 Inglês - 100%
-  * 🌐 Translation-ready (.pot incluído)
-  * ✅ Mais de 150 strings traduzidas
+* **Translations**
+  * 🇧🇷 Portuguese (Brazil) - 100%
+  * 🇺🇸 English - 100%
+  * 🌐 Translation-ready (.pot included)
 
-= Como Usar =
+= How to Use =
 
-1. Instale e ative o plugin
-2. Vá em **DM Ads > Zones** e crie uma zona de banner
-3. Vá em **DM Ads > Banners** e crie um novo banner
-4. Configure a imagem, URL e zona do banner
-5. Adicione o shortcode na página: `[dm_ads zone="nome-da-zona"]`
-6. Acompanhe estatísticas em **DM Ads > Analytics**
+1. Install and activate the plugin
+2. Go to **DM Ads > Zones** and create a banner zone
+3. Go to **DM Ads > Banners** and create a new banner
+4. Configure the image, URL, and banner zone
+5. Add the shortcode to the page: `[dm_ads zone="zone-name"]`
+6. Track statistics in **DM Ads > Analytics**
 
 = Shortcodes =
 
-`[dm_ads zone="header"]` - Exibe banner da zona "header"
-`[dm_ads zone="sidebar"]` - Exibe banner da zona "sidebar"
-`[dm_ads zone="footer"]` - Exibe banner da zona "footer"
+`[dm_ads zone="header"]` - Displays banner from "header" zone
+`[dm_ads zone="sidebar"]` - Displays banner from "sidebar" zone
+`[dm_ads zone="footer"]` - Displays banner from "footer" zone
 
-= Função PHP para Temas =
+= PHP Function for Themes =
 
 `<?php dm_ads_display('header'); ?>`
 
-= Links =
-
-* [Documentação](https://github.com/seu-usuario/designmaster-ads)
-* [GitHub](https://github.com/seu-usuario/designmaster-ads)
-* [Reportar Bugs](https://github.com/seu-usuario/designmaster-ads/issues)
-
 == Installation ==
 
-= Instalação Automática =
+= Automatic Installation =
 
-1. Faça login no seu painel WordPress
-2. Vá em **Plugins > Adicionar Novo**
-3. Busque por "DesignMaster Ads"
-4. Clique em **Instalar Agora**
-5. Ative o plugin
+1. Log in to your WordPress dashboard
+2. Go to **Plugins > Add New**
+3. Search for "DesignMaster Ads"
+4. Click **Install Now**
+5. Activate the plugin
 
-= Instalação Manual =
+= Manual Installation =
 
 1. Faça download do arquivo .zip
 2. Vá em **Plugins > Adicionar Novo > Enviar Plugin**

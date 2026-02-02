@@ -135,48 +135,6 @@ class DM_Ads_Banner {
                 <?php esc_html_e('Click to upload or select an image for this banner', 'designmaster-ads'); ?>
             </p>
         </div>
-        
-        <script>
-        jQuery(document).ready(function($) {
-            var mediaUploader;
-            
-            $('.dm-upload-image-button').on('click', function(e) {
-                e.preventDefault();
-                
-                if (mediaUploader) {
-                    mediaUploader.open();
-                    return;
-                }
-                
-                mediaUploader = wp.media({
-                    title: '<?php esc_attr_e('Select Banner Image', 'designmaster-ads'); ?>',
-                    button: {
-                        text: '<?php esc_attr_e('Use this image', 'designmaster-ads'); ?>'
-                    },
-                    multiple: false
-                });
-                
-                mediaUploader.on('select', function() {
-                    var attachment = mediaUploader.state().get('selection').first().toJSON();
-                    $('#dm_banner_image_id').val(attachment.id);
-                    $('.dm-banner-image-preview').html('<img src="' + attachment.url + '" style="max-width: 100%; height: auto; border: 1px solid #ddd; padding: 5px; background: #f9f9f9;">');
-                    
-                    if ($('.dm-remove-image-button').length === 0) {
-                        $('.dm-upload-image-button').after('<button type="button" class="button dm-remove-image-button"><span class="dashicons dashicons-no" style="margin-top: 3px;"></span> <?php esc_html_e('Remove Image', 'designmaster-ads'); ?></button>');
-                    }
-                });
-                
-                mediaUploader.open();
-            });
-            
-            $(document).on('click', '.dm-remove-image-button', function(e) {
-                e.preventDefault();
-                $('#dm_banner_image_id').val('');
-                $('.dm-banner-image-preview').html('<div style="border: 2px dashed #ddd; padding: 40px; text-align: center; background: #f9f9f9; color: #666;"><span class="dashicons dashicons-format-image" style="font-size: 48px; width: 48px; height: 48px;"></span><p><?php esc_html_e('No image selected', 'designmaster-ads'); ?></p></div>');
-                $(this).remove();
-            });
-        });
-        </script>
         <?php
     }
     
@@ -298,14 +256,14 @@ class DM_Ads_Banner {
         }
         
         // Save image
-        if (isset($_POST['dm_banner_image_nonce']) && wp_verify_nonce($_POST['dm_banner_image_nonce'], 'dm_banner_image')) {
+        if (isset($_POST['dm_banner_image_nonce']) && wp_verify_nonce(sanitize_text_field(wp_unslash($_POST['dm_banner_image_nonce'])), 'dm_banner_image')) {
             if (isset($_POST['dm_banner_image_id'])) {
                 update_post_meta($post_id, '_dm_banner_image_id', absint($_POST['dm_banner_image_id']));
             }
         }
         
         // Save settings
-        if (isset($_POST['dm_banner_settings_nonce']) && wp_verify_nonce($_POST['dm_banner_settings_nonce'], 'dm_banner_settings')) {
+        if (isset($_POST['dm_banner_settings_nonce']) && wp_verify_nonce(sanitize_text_field(wp_unslash($_POST['dm_banner_settings_nonce'])), 'dm_banner_settings')) {
             if (isset($_POST['dm_banner_url'])) {
                 update_post_meta($post_id, '_dm_banner_url', esc_url_raw($_POST['dm_banner_url']));
             }
@@ -324,7 +282,7 @@ class DM_Ads_Banner {
         }
         
         // Save schedule
-        if (isset($_POST['dm_banner_schedule_nonce']) && wp_verify_nonce($_POST['dm_banner_schedule_nonce'], 'dm_banner_schedule')) {
+        if (isset($_POST['dm_banner_schedule_nonce']) && wp_verify_nonce(sanitize_text_field(wp_unslash($_POST['dm_banner_schedule_nonce'])), 'dm_banner_schedule')) {
             if (isset($_POST['dm_banner_start_date'])) {
                 update_post_meta($post_id, '_dm_banner_start_date', sanitize_text_field($_POST['dm_banner_start_date']));
             }
@@ -453,6 +411,37 @@ class DM_Ads_Banner {
                     echo '<span style="color:#dc3232;font-weight:600;">● ' . esc_html__('Expired', 'designmaster-ads') . '</span>';
                 } else {
                     echo '<span style="color:#999;font-weight:600;">○ ' . esc_html__('Inactive', 'designmaster-ads') . '</span>';
+                }
+                break;
+                
+            case 'priority':
+                $priority = get_post_meta($post_id, '_dm_banner_priority', true);
+                if ($priority) {
+                    $color = '#999';
+                    if ($priority >= 80) $color = '#dc3232';
+                    elseif ($priority >= 60) $color = '#f56e28';
+                    elseif ($priority >= 40) $color = '#00a0d2';
+                    elseif ($priority >= 20) $color = '#46b450';
+                    
+                    echo '<span style="color:' . esc_attr($color) . ';font-weight:600;font-size:16px;">' . esc_html($priority) . '</span>';
+                } else {
+                    echo '<span style="color:#999;">50</span>';
+                }
+                break;
+                
+            case 'schedule':
+                $start_date = get_post_meta($post_id, '_dm_banner_start_date', true);
+                $end_date = get_post_meta($post_id, '_dm_banner_end_date', true);
+                
+                if ($start_date || $end_date) {
+                    if ($start_date) {
+                        echo '<strong>' . esc_html__('Start:', 'designmaster-ads') . '</strong> ' . esc_html(date_i18n('d/m/Y H:i', strtotime($start_date))) . '<br>';
+                    }
+                    if ($end_date) {
+                        echo '<strong>' . esc_html__('End:', 'designmaster-ads') . '</strong> ' . esc_html(date_i18n('d/m/Y H:i', strtotime($end_date)));
+                    }
+                } else {
+                    echo '<span style="color:#999;">∞ ' . esc_html__('Always', 'designmaster-ads') . '</span>';
                 }
                 break;
                 

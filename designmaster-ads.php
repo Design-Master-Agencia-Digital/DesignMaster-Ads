@@ -1,11 +1,9 @@
 <?php
 /**
  * Plugin Name: DesignMaster Ads
- * Plugin URI: https://github.com/yourusername/designmaster-ads
- * Description: Sistema completo de gestão de banners com analytics avançado, gráficos visuais, lazy loading, rotação inteligente e estatísticas detalhadas
+ * Description: Complete banner management system with advanced analytics, visual charts, lazy loading, smart rotation, and detailed statistics.
  * Version: 1.1.0
  * Author: Alan de Bortolo
- * Author URI: https://alandebortolo.com
  * License: GPL v2 or later
  * License URI: https://www.gnu.org/licenses/gpl-2.0.html
  * Text Domain: designmaster-ads

@@ -581,3 +581,19 @@ msgstr "Este Mês"
 msgid "All Time"
 msgstr "Todo o Período"
 
+# Unique Stats
+msgid "unique visitors"
+msgstr "visitantes únicos"
+
+msgid "unique users"
+msgstr "usuários únicos"
+
+msgid "unique CTR"
+msgstr "CTR único"
+
+msgid "Unique Views"
+msgstr "Visualizações Únicas"
+
+msgid "Total vs Unique"
+msgstr "Total vs Únicos"
+

@@ -12,6 +12,59 @@ YELLOW='\033[1;33m'
 BLUE='\033[0;34m'
 NC='\033[0m' # No Color
 
+# Function to increment version
+increment_version() {
+    local version=$1
+    local type=$2
+    
+    IFS='.' read -r -a parts <<< "$version"
+    major="${parts[0]}"
+    minor="${parts[1]}"
+    patch="${parts[2]}"
+    
+    case $type in
+        major)
+            major=$((major + 1))
+            minor=0
+            patch=0
+            ;;
+        minor)
+            minor=$((minor + 1))
+            patch=0
+            ;;
+        patch)
+            patch=$((patch + 1))
+            ;;
+    esac
+    
+    echo "${major}.${minor}.${patch}"
+}
+
+# Function to update version in files
+update_version() {
+    local old_version=$1
+    local new_version=$2
+    
+    echo -e "${YELLOW}📝 Atualizando versão nos arquivos...${NC}"
+    
+    # Update main plugin file
+    sed -i.bak "s/Version: *${old_version}/Version: ${new_version}/" designmaster-ads.php
+    sed -i.bak "s/define( *'DM_ADS_VERSION', *'${old_version}' *)/define( 'DM_ADS_VERSION', '${new_version}' )/" designmaster-ads.php
+    echo "  ✓ designmaster-ads.php"
+    
+    # Update readme.txt
+    if [ -f readme.txt ]; then
+        sed -i.bak "s/Stable tag: *${old_version}/Stable tag: ${new_version}/" readme.txt
+        echo "  ✓ readme.txt"
+    fi
+    
+    # Clean up backup files
+    rm -f designmaster-ads.php.bak readme.txt.bak
+    
+    echo -e "${GREEN}✅ Versão atualizada de ${old_version} para ${new_version}${NC}"
+    echo ""
+}
+
 echo -e "${BLUE}━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━${NC}"
 echo -e "${BLUE}  DesignMaster Ads - Build Distribution${NC}"
 echo -e "${BLUE}━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━${NC}"
@@ -21,15 +74,35 @@ echo ""
 PLUGIN_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 cd "$PLUGIN_DIR"
 
-# Get version from main plugin file
-VERSION=$(grep "Version:" designmaster-ads.php | head -1 | awk '{print $3}')
+# Check for version increment flag
+INCREMENT_TYPE=""
+if [ "$1" == "--major" ]; then
+    INCREMENT_TYPE="major"
+elif [ "$1" == "--minor" ]; then
+    INCREMENT_TYPE="minor"
+elif [ "$1" == "--patch" ]; then
+    INCREMENT_TYPE="patch"
+fi
 
-if [ -z "$VERSION" ]; then
+# Get current version from main plugin file
+CURRENT_VERSION=$(grep "Version:" designmaster-ads.php | head -1 | awk '{print $3}')
+
+if [ -z "$CURRENT_VERSION" ]; then
     echo -e "${RED}❌ Erro: Não foi possível detectar a versão do plugin${NC}"
     exit 1
 fi
 
-echo -e "${GREEN}📦 Versão detectada: ${VERSION}${NC}"
+# Increment version if requested
+if [ -n "$INCREMENT_TYPE" ]; then
+    echo -e "${BLUE}🔢 Incrementando versão ($INCREMENT_TYPE)...${NC}"
+    NEW_VERSION=$(increment_version "$CURRENT_VERSION" "$INCREMENT_TYPE")
+    update_version "$CURRENT_VERSION" "$NEW_VERSION"
+    VERSION="$NEW_VERSION"
+else
+    VERSION="$CURRENT_VERSION"
+fi
+
+echo -e "${GREEN}📦 Versão do build: ${VERSION}${NC}"
 echo ""
 
 # Define output directory and filename
@@ -38,67 +111,73 @@ PLUGIN_NAME="designmaster-ads"
 OUTPUT_FILE="${PLUGIN_NAME}-${VERSION}.zip"
 TEMP_DIR="${BUILD_DIR}/${PLUGIN_NAME}"
 
+# Validate required files and directories
+echo -e "${YELLOW}✅ Validando estrutura do plugin...${NC}"
+REQUIRED_FILES=("designmaster-ads.php" "readme.txt" "README.md" "CHANGELOG.md")
+REQUIRED_DIRS=("includes" "templates" "assets" "languages")
+
+for file in "${REQUIRED_FILES[@]}"; do
+    if [ ! -f "$file" ]; then
+        echo -e "${RED}❌ Erro: Arquivo obrigatório não encontrado: $file${NC}"
+        exit 1
+    fi
+    echo "  ✓ $file"
+done
+
+for dir in "${REQUIRED_DIRS[@]}"; do
+    if [ ! -d "$dir" ]; then
+        echo -e "${RED}❌ Erro: Diretório obrigatório não encontrado: $dir${NC}"
+        exit 1
+    fi
+    echo "  ✓ $dir/"
+done
+echo ""
+
 # Create build directory
 echo -e "${YELLOW}🔨 Preparando diretório de build...${NC}"
 rm -rf "$BUILD_DIR"
 mkdir -p "$TEMP_DIR"
 
-# Copy necessary files
+# Files and directories to EXCLUDE from the build
+EXCLUDE_PATTERNS=(
+    ".git"
+    ".gitignore"
+    ".gitattributes"
+    ".DS_Store"
+    "node_modules"
+    "build"
+    "*.log"
+    "*.tmp"
+    "*.bak"
+    ".vscode"
+    ".idea"
+    "test-*.php"
+    "BUILD_CHECKLIST.md"
+    "GIT_SETUP.md"
+    "SUBMISSION_CHECKLIST.md"
+    "WORDPRESS_ORG_SUBMISSION.md"
+    "UNIQUE_STATS_FEATURE.md"
+    "IMPROVEMENTS_*.md"
+    "build-plugin.sh"
+    "wp-debug.php"
+    "phpcs.xml"
+    "composer.json"
+    "composer.lock"
+    "package.json"
+    "package-lock.json"
+    ".phpcs.xml.dist"
+)
+
+# Build rsync exclude arguments
+RSYNC_EXCLUDES=""
+for pattern in "${EXCLUDE_PATTERNS[@]}"; do
+    RSYNC_EXCLUDES="$RSYNC_EXCLUDES --exclude=$pattern"
+done
+
+# Copy all files except excluded ones
 echo -e "${YELLOW}📋 Copiando arquivos do plugin...${NC}"
-
-# Main plugin file
-cp designmaster-ads.php "$TEMP_DIR/"
-echo "  ✓ designmaster-ads.php"
-
-# Core directories
-cp -r includes "$TEMP_DIR/"
-echo "  ✓ includes/"
-
-cp -r templates "$TEMP_DIR/"
-echo "  ✓ templates/"
-
-cp -r assets "$TEMP_DIR/"
-echo "  ✓ assets/"
-
-cp -r languages "$TEMP_DIR/"
-echo "  ✓ languages/"
-
-# Documentation files
-cp readme.txt "$TEMP_DIR/"
-echo "  ✓ readme.txt"
-
-cp README.md "$TEMP_DIR/"
-echo "  ✓ README.md"
-
-cp CHANGELOG.md "$TEMP_DIR/"
-echo "  ✓ CHANGELOG.md"
-
-if [ -f LICENSE ]; then
-    cp LICENSE "$TEMP_DIR/"
-    echo "  ✓ LICENSE"
-fi
-
-if [ -f license.txt ]; then
-    cp license.txt "$TEMP_DIR/"
-    echo "  ✓ license.txt"
-fi
-
-# Optional documentation
-if [ -f INSTALLATION.md ]; then
-    cp INSTALLATION.md "$TEMP_DIR/"
-    echo "  ✓ INSTALLATION.md"
-fi
-
-if [ -f TECHNICAL.md ]; then
-    cp TECHNICAL.md "$TEMP_DIR/"
-    echo "  ✓ TECHNICAL.md"
-fi
-
-if [ -f TROUBLESHOOTING.md ]; then
-    cp TROUBLESHOOTING.md "$TEMP_DIR/"
-    echo "  ✓ TROUBLESHOOTING.md"
-fi
-
+rsync -av --quiet $RSYNC_EXCLUDES ./ "$TEMP_DIR/"
+echo "  ✓ Todos os arquivos copiados (excluindo arquivos de desenvolvimento)"
 echo ""
 
 # Clean up unnecessary files
@@ -186,5 +265,32 @@ echo ""
 echo "  3. Submeta ao WordPress.org:"
 echo -e "     ${YELLOW}https://wordpress.org/plugins/developers/add/${NC}"
 echo ""
+
+if [ -n "$INCREMENT_TYPE" ]; then
+    echo -e "${YELLOW}⚠️  Não esqueça de commitar a nova versão:${NC}"
+    echo -e "     git add ."
+    echo -e "     git commit -m \"Bump version to ${VERSION}\""
+    echo -e "     git tag v${VERSION}"
+    echo -e "     git push && git push --tags"
+    echo ""
+fi
+
 echo -e "${GREEN}✨ Build concluída com sucesso!${NC}"
+echo ""
+echo -e "${BLUE}━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━${NC}"
+echo -e "${YELLOW}💡 Uso do script:${NC}"
+echo ""
+echo -e "  ${GREEN}Build normal:${NC}"
+echo -e "    ./build-plugin.sh"
+echo ""
+echo -e "  ${GREEN}Incrementar patch (1.0.0 → 1.0.1):${NC}"
+echo -e "    ./build-plugin.sh --patch"
+echo ""
+echo -e "  ${GREEN}Incrementar minor (1.0.0 → 1.1.0):${NC}"
+echo -e "    ./build-plugin.sh --minor"
+echo ""
+echo -e "  ${GREEN}Incrementar major (1.0.0 → 2.0.0):${NC}"
+echo -e "    ./build-plugin.sh --major"
+echo ""
+echo -e "${BLUE}━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━${NC}"
 echo ""

@@ -38,7 +38,7 @@ class DM_Ads_Admin {
         // Chart.js for analytics
         wp_enqueue_script(
             'chartjs',
-            'https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js',
+            DM_ADS_PLUGIN_URL . 'assets/js/chart.umd.min.js',
             array(),
             '4.4.0',
             true
@@ -50,6 +50,17 @@ class DM_Ads_Admin {
             array('jquery'),
             $this->version,
             true
+        );
+
+        wp_localize_script(
+            $this->plugin_name . '-admin',
+            'dmAdsAdmin',
+            array(
+                'selectImage' => esc_html__('Select Banner Image', 'designmaster-ads'),
+                'useImage' => esc_html__('Use this image', 'designmaster-ads'),
+                'removeImage' => esc_html__('Remove Image', 'designmaster-ads'),
+                'noImage' => esc_html__('No image selected', 'designmaster-ads')
+            )
         );
         
         wp_enqueue_script(

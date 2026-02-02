@@ -21,15 +21,24 @@ class DM_Ads_Analytics {
             $where .= $wpdb->prepare(" AND created_at <= %s", $end_date);
         }
         
+        // Total views and clicks
         $views = $wpdb->get_var("SELECT COUNT(*) FROM $table WHERE $where AND event_type = 'view'");
         $clicks = $wpdb->get_var("SELECT COUNT(*) FROM $table WHERE $where AND event_type = 'click'");
         
+        // Unique views and clicks (by IP + User Agent)
+        $unique_views = $wpdb->get_var("SELECT COUNT(DISTINCT CONCAT(user_ip, user_agent)) FROM $table WHERE $where AND event_type = 'view'");
+        $unique_clicks = $wpdb->get_var("SELECT COUNT(DISTINCT CONCAT(user_ip, user_agent)) FROM $table WHERE $where AND event_type = 'click'");
+        
         $ctr = $views > 0 ? round(($clicks / $views) * 100, 2) : 0;
+        $unique_ctr = $unique_views > 0 ? round(($unique_clicks / $unique_views) * 100, 2) : 0;
         
         return array(
             'views' => intval($views),
             'clicks' => intval($clicks),
-            'ctr' => $ctr
+            'unique_views' => intval($unique_views),
+            'unique_clicks' => intval($unique_clicks),
+            'ctr' => $ctr,
+            'unique_ctr' => $unique_ctr
         );
     }
     
@@ -82,6 +91,11 @@ class DM_Ads_Analytics {
         global $wpdb;
         $table = $wpdb->prefix . 'dm_ads_stats';
         
+        // Check if table exists
+        if ($wpdb->get_var("SHOW TABLES LIKE '$table'") != $table) {
+            return array();
+        }
+        
         // Use custom date range if provided, otherwise use days
         if ($start_date && $end_date) {
             $where = $wpdb->prepare("created_at >= %s AND created_at <= %s", $start_date . ' 00:00:00', $end_date . ' 23:59:59');
@@ -105,12 +119,14 @@ class DM_Ads_Analytics {
         ");
         
         $stats = array();
-        foreach ($results as $row) {
-            $date = $row->date;
-            if (!isset($stats[$date])) {
-                $stats[$date] = array('views' => 0, 'clicks' => 0);
+        if ($results) {
+            foreach ($results as $row) {
+                $date = $row->date;
+                if (!isset($stats[$date])) {
+                    $stats[$date] = array('views' => 0, 'clicks' => 0);
+                }
+                $stats[$date][$row->event_type . 's'] = intval($row->count);
             }
-            $stats[$date][$row->event_type . 's'] = intval($row->count);
         }
         
         return $stats;
@@ -122,6 +138,15 @@ class DM_Ads_Analytics {
     public static function get_stats_by_device($banner_id = null, $days = 30, $start_date = null, $end_date = null) {
         global $wpdb;
         $table = $wpdb->prefix . 'dm_ads_stats';
+        
+        // Check if table exists
+        if ($wpdb->get_var("SHOW TABLES LIKE '$table'") != $table) {
+            return array(
+                'desktop' => array('views' => 0, 'clicks' => 0),
+                'mobile' => array('views' => 0, 'clicks' => 0),
+                'tablet' => array('views' => 0, 'clicks' => 0)
+            );
+        }
         
         // Use custom date range if provided, otherwise use days
         if ($start_date && $end_date) {
@@ -150,8 +175,12 @@ class DM_Ads_Analytics {
             'tablet' => array('views' => 0, 'clicks' => 0)
         );
         
-        foreach ($results as $row) {
-            $stats[$row->device_type][$row->event_type . 's'] = intval($row->count);
+        if ($results) {
+            foreach ($results as $row) {
+                if (isset($stats[$row->device_type])) {
+                    $stats[$row->device_type][$row->event_type . 's'] = intval($row->count);
+                }
+            }
         }
         
         return $stats;
@@ -163,6 +192,11 @@ class DM_Ads_Analytics {
     public static function get_top_banners($limit = 10, $days = 30, $start_date = null, $end_date = null) {
         global $wpdb;
         $table = $wpdb->prefix . 'dm_ads_stats';
+        
+        // Check if table exists
+        if ($wpdb->get_var("SHOW TABLES LIKE '$table'") != $table) {
+            return array();
+        }
         
         // Use custom date range if provided, otherwise use days
         if ($start_date && $end_date) {
@@ -184,17 +218,19 @@ class DM_Ads_Analytics {
         ", $limit));
         
         $banners = array();
-        foreach ($results as $row) {
-            $post = get_post($row->banner_id);
-            if ($post) {
-                $ctr = $row->views > 0 ? round(($row->clicks / $row->views) * 100, 2) : 0;
-                $banners[] = array(
-                    'id' => $row->banner_id,
-                    'title' => $post->post_title,
-                    'views' => intval($row->views),
-                    'clicks' => intval($row->clicks),
-                    'ctr' => $ctr
-                );
+        if ($results) {
+            foreach ($results as $row) {
+                $post = get_post($row->banner_id);
+                if ($post) {
+                    $ctr = $row->views > 0 ? round(($row->clicks / $row->views) * 100, 2) : 0;
+                    $banners[] = array(
+                        'id' => $row->banner_id,
+                        'title' => $post->post_title,
+                        'views' => intval($row->views),
+                        'clicks' => intval($row->clicks),
+                        'ctr' => $ctr
+                    );
+                }
             }
         }
         
@@ -283,5 +319,53 @@ class DM_Ads_Analytics {
         
         fclose($output);
         exit;
+    }
+    
+    /**
+     * Get total and unique statistics for dashboard
+     */
+    public static function get_total_stats($days = 30, $start_date = null, $end_date = null) {
+        global $wpdb;
+        $table = $wpdb->prefix . 'dm_ads_stats';
+        
+        // Check if table exists
+        if ($wpdb->get_var("SHOW TABLES LIKE '$table'") != $table) {
+            return array(
+                'total_views' => 0,
+                'total_clicks' => 0,
+                'unique_views' => 0,
+                'unique_clicks' => 0,
+                'total_ctr' => 0,
+                'unique_ctr' => 0
+            );
+        }
+        
+        // Build where clause
+        if ($start_date && $end_date) {
+            $where = $wpdb->prepare("created_at >= %s AND created_at <= %s", $start_date . ' 00:00:00', $end_date . ' 23:59:59');
+        } else {
+            $where = "created_at >= DATE_SUB(NOW(), INTERVAL $days DAY)";
+        }
+        
+        // Total views and clicks
+        $total_views = $wpdb->get_var("SELECT COUNT(*) FROM $table WHERE $where AND event_type = 'view'");
+        $total_clicks = $wpdb->get_var("SELECT COUNT(*) FROM $table WHERE $where AND event_type = 'click'");
+        
+        // Unique views and clicks (by IP + User Agent combination)
+        $unique_views = $wpdb->get_var("SELECT COUNT(DISTINCT CONCAT(COALESCE(user_ip, ''), '|', COALESCE(user_agent, ''))) FROM $table WHERE $where AND event_type = 'view'");
+        $unique_clicks = $wpdb->get_var("SELECT COUNT(DISTINCT CONCAT(COALESCE(user_ip, ''), '|', COALESCE(user_agent, ''))) FROM $table WHERE $where AND event_type = 'click'");
+        
+        // Calculate CTR
+        $total_ctr = $total_views > 0 ? round(($total_clicks / $total_views) * 100, 2) : 0;
+        $unique_ctr = $unique_views > 0 ? round(($unique_clicks / $unique_views) * 100, 2) : 0;
+        
+        return array(
+            'total_views' => intval($total_views),
+            'total_clicks' => intval($total_clicks),
+            'unique_views' => intval($unique_views),
+            'unique_clicks' => intval($unique_clicks),
+            'total_ctr' => $total_ctr,
+            'unique_ctr' => $unique_ctr
+        );
     }
 }

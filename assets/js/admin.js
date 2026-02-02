@@ -33,6 +33,45 @@
             }
         });
 
+        // Media Uploader
+        var mediaUploader;
+        
+        $('.dm-upload-image-button').on('click', function(e) {
+            e.preventDefault();
+            
+            if (mediaUploader) {
+                mediaUploader.open();
+                return;
+            }
+            
+            mediaUploader = wp.media({
+                title: dmAdsAdmin.selectImage,
+                button: {
+                    text: dmAdsAdmin.useImage
+                },
+                multiple: false
+            });
+            
+            mediaUploader.on('select', function() {
+                var attachment = mediaUploader.state().get('selection').first().toJSON();
+                $('#dm_banner_image_id').val(attachment.id);
+                $('.dm-banner-image-preview').html('<img src="' + attachment.url + '" style="max-width: 100%; height: auto; border: 1px solid #ddd; padding: 5px; background: #f9f9f9;">');
+                
+                if ($('.dm-remove-image-button').length === 0) {
+                    $('.dm-upload-image-button').after('<button type="button" class="button dm-remove-image-button"><span class="dashicons dashicons-no" style="margin-top: 3px;"></span> ' + dmAdsAdmin.removeImage + '</button>');
+                }
+            });
+            
+            mediaUploader.open();
+        });
+        
+        $(document).on('click', '.dm-remove-image-button', function(e) {
+            e.preventDefault();
+            $('#dm_banner_image_id').val('');
+            $('.dm-banner-image-preview').html('<div style="border: 2px dashed #ddd; padding: 40px; text-align: center; background: #f9f9f9; color: #666;"><span class="dashicons dashicons-format-image" style="font-size: 48px; width: 48px; height: 48px;"></span><p>' + dmAdsAdmin.noImage + '</p></div>');
+            $(this).remove();
+        });
+
     });
 
 })(jQuery);

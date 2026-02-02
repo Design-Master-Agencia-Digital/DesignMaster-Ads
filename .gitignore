@@ -36,3 +36,7 @@ composer.lock
 # Environment
 .env
 .env.local
+
+# Deploy scripts
+deploy-to-server.sh
+deploy-ftp.py

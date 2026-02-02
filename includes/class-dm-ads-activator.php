@@ -28,7 +28,7 @@ class DM_Ads_Activator {
         $sql = "CREATE TABLE IF NOT EXISTS $table_name (
             id bigint(20) NOT NULL AUTO_INCREMENT,
             banner_id bigint(20) NOT NULL,
-            zone_id bigint(20) NOT NULL,
+            zone_id bigint(20) DEFAULT 0,
             event_type enum('view','click') NOT NULL,
             user_ip varchar(45) DEFAULT NULL,
             user_agent text DEFAULT NULL,
@@ -44,7 +44,9 @@ class DM_Ads_Activator {
             KEY device_type (device_type)
         ) $charset_collate;";
         
-        require_once(ABSPATH . 'wp-admin/includes/upgrade.php');
+        if (!function_exists('dbDelta')) {
+            require_once(ABSPATH . 'wp-admin/includes/upgrade.php');
+        }
         dbDelta($sql);
     }
     

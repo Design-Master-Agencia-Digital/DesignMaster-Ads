@@ -48,37 +48,37 @@ $top_banner_clicks = array_column($top_banners, 'clicks');
 
 <div class="wrap">
     <div class="dm-ads-admin-header">
-        <h1><?php _e('Analytics & Statistics', 'designmaster-ads'); ?></h1>
-        <p><?php _e('Detailed performance metrics and insights', 'designmaster-ads'); ?></p>
+        <h1><?php esc_html_e('Analytics & Statistics', 'designmaster-ads'); ?></h1>
+        <p><?php esc_html_e('Detailed performance metrics and insights', 'designmaster-ads'); ?></p>
     </div>
 
     <!-- Filters -->
     <div class="dm-ads-filters">
         <div class="dm-ads-filter-group">
-            <label for="dm-ads-date-range"><?php _e('Date Range:', 'designmaster-ads'); ?></label>
+            <label for="dm-ads-date-range"><?php esc_html_e('Date Range:', 'designmaster-ads'); ?></label>
             <select id="dm-ads-date-range" name="date_range">
-                <option value="7" <?php selected($date_range, '7'); ?>><?php _e('Last 7 Days', 'designmaster-ads'); ?></option>
-                <option value="30" <?php selected($date_range, '30'); ?>><?php _e('Last 30 Days', 'designmaster-ads'); ?></option>
-                <option value="90" <?php selected($date_range, '90'); ?>><?php _e('Last 90 Days', 'designmaster-ads'); ?></option>
-                <option value="custom" <?php selected($date_range, 'custom'); ?>><?php _e('Custom Period', 'designmaster-ads'); ?></option>
+                <option value="7" <?php selected($date_range, '7'); ?>><?php esc_html_e('Last 7 Days', 'designmaster-ads'); ?></option>
+                <option value="30" <?php selected($date_range, '30'); ?>><?php esc_html_e('Last 30 Days', 'designmaster-ads'); ?></option>
+                <option value="90" <?php selected($date_range, '90'); ?>><?php esc_html_e('Last 90 Days', 'designmaster-ads'); ?></option>
+                <option value="custom" <?php selected($date_range, 'custom'); ?>><?php esc_html_e('Custom Period', 'designmaster-ads'); ?></option>
             </select>
         </div>
 
         <div class="dm-ads-filter-group dm-ads-custom-dates" style="display: <?php echo $date_range === 'custom' ? 'flex' : 'none'; ?>;">
             <div>
-                <label for="dm-ads-start-date"><?php _e('Start Date:', 'designmaster-ads'); ?></label>
+                <label for="dm-ads-start-date"><?php esc_html_e('Start Date:', 'designmaster-ads'); ?></label>
                 <input type="date" id="dm-ads-start-date" name="start_date" value="<?php echo esc_attr($start_date); ?>">
             </div>
             <div>
-                <label for="dm-ads-end-date"><?php _e('End Date:', 'designmaster-ads'); ?></label>
+                <label for="dm-ads-end-date"><?php esc_html_e('End Date:', 'designmaster-ads'); ?></label>
                 <input type="date" id="dm-ads-end-date" name="end_date" value="<?php echo esc_attr($end_date); ?>">
             </div>
         </div>
 
         <div class="dm-ads-filter-group">
-            <label for="dm-ads-banner-filter"><?php _e('Banner:', 'designmaster-ads'); ?></label>
+            <label for="dm-ads-banner-filter"><?php esc_html_e('Banner:', 'designmaster-ads'); ?></label>
             <select id="dm-ads-banner-filter" name="banner_id">
-                <option value=""><?php _e('All Banners', 'designmaster-ads'); ?></option>
+                <option value=""><?php esc_html_e('All Banners', 'designmaster-ads'); ?></option>
                 <?php
                 $banners = get_posts(array('post_type' => 'dm_banner', 'posts_per_page' => -1));
                 foreach ($banners as $b) {
@@ -89,13 +89,13 @@ $top_banner_clicks = array_column($top_banners, 'clicks');
         </div>
 
         <div class="dm-ads-filter-group">
-            <a href="#" id="dm-ads-export-csv" class="button"><?php _e('Export to CSV', 'designmaster-ads'); ?></a>
+            <a href="#" id="dm-ads-export-csv" class="button"><?php esc_html_e('Export to CSV', 'designmaster-ads'); ?></a>
         </div>
     </div>
 
     <!-- Views vs Clicks Chart -->
     <div class="dm-ads-chart-container">
-        <h2><?php _e('Views & Clicks Trend', 'designmaster-ads'); ?></h2>
+        <h2><?php esc_html_e('Views & Clicks Trend', 'designmaster-ads'); ?></h2>
         <div class="dm-ads-chart-wrapper">
             <canvas id="dm-chart-views-clicks"></canvas>
         </div>
@@ -104,7 +104,7 @@ $top_banner_clicks = array_column($top_banners, 'clicks');
     <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px;">
         <!-- Device Distribution -->
         <div class="dm-ads-chart-container">
-            <h2><?php _e('Device Distribution', 'designmaster-ads'); ?></h2>
+            <h2><?php esc_html_e('Device Distribution', 'designmaster-ads'); ?></h2>
             <div class="dm-ads-chart-wrapper" style="height: 300px;">
                 <canvas id="dm-chart-devices"></canvas>
             </div>
@@ -112,7 +112,7 @@ $top_banner_clicks = array_column($top_banners, 'clicks');
 
         <!-- Top Banners -->
         <div class="dm-ads-chart-container">
-            <h2><?php _e('Top Banners by Clicks', 'designmaster-ads'); ?></h2>
+            <h2><?php esc_html_e('Top Banners by Clicks', 'designmaster-ads'); ?></h2>
             <div class="dm-ads-chart-wrapper" style="height: 300px;">
                 <canvas id="dm-chart-top-banners"></canvas>
             </div>
@@ -121,30 +121,30 @@ $top_banner_clicks = array_column($top_banners, 'clicks');
 
     <!-- Hourly Performance -->
     <div class="dm-ads-chart-container">
-        <h2><?php _e('Performance by Hour', 'designmaster-ads'); ?></h2>
+        <h2><?php esc_html_e('Performance by Hour', 'designmaster-ads'); ?></h2>
         <div class="dm-ads-chart-wrapper">
             <canvas id="dm-chart-hourly"></canvas>
         </div>
     </div>
 </div>
 
-<script>
-    // Pass data to JavaScript
-    window.dmAnalyticsData = {
-        viewsClicks: {
-            labels: <?php echo json_encode($chart_labels); ?>,
-            views: <?php echo json_encode($chart_views); ?>,
-            clicks: <?php echo json_encode($chart_clicks); ?>
-        },
-        devices: <?php echo json_encode($device_views); ?>,
-        hourly: {
-            hours: <?php echo json_encode($hourly_hours); ?>,
-            views: <?php echo json_encode($hourly_views); ?>,
-            clicks: <?php echo json_encode($hourly_clicks); ?>
-        },
-        topBanners: {
-            labels: <?php echo json_encode($top_banner_labels); ?>,
-            clicks: <?php echo json_encode($top_banner_clicks); ?>
-        }
-    };
-</script>
+<?php
+$analytics_data = array(
+    'viewsClicks' => array(
+        'labels' => $chart_labels,
+        'views' => $chart_views,
+        'clicks' => $chart_clicks
+    ),
+    'devices' => $device_views,
+    'hourly' => array(
+        'hours' => $hourly_hours,
+        'views' => $hourly_views,
+        'clicks' => $hourly_clicks
+    ),
+    'topBanners' => array(
+        'labels' => $top_banner_labels,
+        'clicks' => $top_banner_clicks
+    )
+);
+wp_add_inline_script('designmaster-ads-analytics', 'window.dmAnalyticsData = ' . wp_json_encode($analytics_data) . ';');
+?>
